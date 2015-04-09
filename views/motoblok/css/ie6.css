@@ -1,0 +1,95 @@
+.top_line {
+	display: none;
+}
+.search {
+	margin: 0;
+	padding: 10px 0 0;
+}
+#search {
+	position: absolute;
+	top: 9px;
+	right: 0;
+}
+
+.time_contact p {
+	font: 17px Arial, Tahoma, Verdana;
+	margin: 5px 30px 0 20px;
+}
+.time_contact p span {
+	font: bold 17px Arial, Tahoma, Verdana;
+}
+.contact {
+	float: left;
+}
+.work_time {
+	float: left;
+	margin: 5px 0 0;
+}
+
+.top_menu {
+	top: 105px;
+}
+.top_menu li {
+	float: left;
+}
+.top_menu li a {
+	display: block;
+}
+.top_menu ul li p {
+	margin: 0 10px;
+	position: relative;
+	top: -5px;
+}
+
+#cat_top_menu {
+	position: relative;
+	z-index: 20;
+}
+#cat_top_menu li.main_cat {
+	float: left;
+	height: 27px;
+}
+#cat_top_menu li.main_cat a {
+	display: block;
+	width: 115px;
+	padding: 6px 0 0;
+	height: 21px;
+}
+.main_cat ul li a {
+	width: 200px !important;
+}
+
+.discount_block {
+	background: url(../img/discount_block.png) repeat;
+  width: 219px;
+}
+
+.panel_offer {
+  position: relative;
+  right: 7px;
+}
+#products {
+	position: relative;
+	right: 7px;
+}
+
+.product_grid {
+	margin: 0 0 0 -10px;
+}
+.continue_shopping a {
+	position: relative;
+	left: -400px;
+}
+
+#rightbar {
+  width: 212px;
+}
+
+footer {
+	margin-top: 0;
+}
+#news_submit {
+	position: relative;
+	top: -70px;
+	right: 0;
+}

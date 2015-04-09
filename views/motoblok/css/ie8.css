@@ -1,0 +1,13 @@
+.top_menu ul li p {
+	margin: 7px 10px 0;
+}
+.top_menu li.cart_i {
+	position: relative;
+	top: 8px;
+}
+#cat_top_menu li:nth-child(3) a {
+  width: 2000px;
+}
+footer {
+	padding-bottom: 5px;
+}
