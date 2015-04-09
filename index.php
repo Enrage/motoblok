@@ -24,7 +24,6 @@ if(isset($_POST['auth'])) {
 		unset($_SESSION['auth']);
 		die;
 	}
-	// $functions->redirect();
 }
 if(isset($_GET['view'])) {
 	if($_GET['view'] == 'logout') {
