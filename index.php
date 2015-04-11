@@ -36,4 +36,5 @@ if(class_exists($class)) {
 	$obj = new $class;
 	$obj->get_body($class);
 }
+
 ?>
