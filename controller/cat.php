@@ -11,13 +11,13 @@ class cat extends Core {
 		} else $res = "<div class='error'>Нет такой категории!</div>";
 		return $res;
 	}
-	/*protected function bread_crumbs() {
+	protected function bread_crumbs() {
 		if(isset($_GET['category'])) {
 			$category = abs((int)$_GET['category']);
 			$brand_name = $this->m->brand_name($category);
 		} else $brand_name = null;
 		return $brand_name;
-	}*/
+	}
 	protected function pos() {
 		if(isset($_GET['category'])) {
 			$category = abs((int)$_GET['category']);

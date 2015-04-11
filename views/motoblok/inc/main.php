@@ -44,7 +44,7 @@ $product = $this->get_content()?>
 				<?php foreach($product as $item): ?>
 				<article>
 					<h2><a href="?view=product&amp;goods_id=<?=$item['goods_id']?>"><?=$item['name']?></a></h2>
-					<a href="?view=product&amp;goods_id=<?=$item['goods_id']?>" class="product_img"><img src="<?=TEMPLATE?>img/<?=$item['img']?>" width="130" alt="<?=$item['name']?>"></a>
+					<a href="?view=product&amp;goods_id=<?=$item['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$item['img']?>" width="130" alt="<?=$item['name']?>"></a>
 					<p class="price"><span class="id_<?=$item['goods_id']?>"><?=$item['price']?></span> руб.</p>
 					<a href="?view=addtocart&amp;goods_id=<?=$item['goods_id']?>" class="addtocart" id="<?=$item['goods_id']?>">В корзину</a>
 				</article>

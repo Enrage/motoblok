@@ -470,5 +470,64 @@ class model {
 		mail($email, $subject, $mail_body, $headers);
 		mail(ADMIN_EMAIL, $subject, $mail_body, $headers);
 	}
+
+	// Отдельный товар
+	public function get_goods($goods_id) {
+		$visible = '1';
+		$query = "SELECT * FROM goods WHERE goods_id = ? AND visible = ?";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('is', $goods_id, $visible);
+		$stmt->execute();
+		$stmt->bind_result($goods_id, $name, $keywords, $description, $img, $goods_brandid, $anons, $content, $visible, $hits, $news, $sale, $price, $date, $img_slide);
+		$goods = array();
+		while($stmt->fetch()) {
+			$goods[] = array(
+				'goods_id' => $goods_id,
+				'name' => $name,
+				'keywords' => $keywords,
+				'description' => $description,
+				'img' => $img,
+				'goods_brandid' => $goods_brandid,
+				'anons' => $anons,
+				'content' => $content,
+				'visible' => $visible,
+				'hits' => $hits,
+				'news' => $news,
+				'sale' => $sale,
+				'price' => $price,
+				'date' => $date,
+				'img_slide' => $img_slide);
+			if(isset($img_slide)) {
+				$goods['img_slide'] = explode("|", $img_slide);
+			}
+		}
+		$stmt->close();
+		return $goods;
+	}
+
+	// Получение названий для хлебных крошек
+	public function brand_name($category) {
+		$query = "SELECT brand_id, brand_name FROM brands WHERE brand_id = (SELECT parent_id FROM brands WHERE brand_id = ?)
+		UNION
+		SELECT brand_id, brand_name FROM brands WHERE brand_id = ?";
+		try {
+			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error Prepare products");
+			$stmt->bind_param('ii', $category, $category);
+			$stmt->execute();
+			$stmt->bind_result($brand_id, $brand_name);
+			$brandname = array();
+			while($stmt->fetch()) {
+				$brandname[] = array(
+					'brand_id' => $brand_id,
+					'brand_name' => $brand_name);
+			}
+			$stmt->close();
+		}
+		catch(Exception $e) {
+			print 'Ошибка: '. $e->getMessage();
+			die();
+		}
+		return $brandname;
+	}
 }
 ?>

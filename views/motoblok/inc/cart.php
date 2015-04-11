@@ -43,22 +43,22 @@ $session_order = $this->session_order()?>
 					<h3>Информация для доставки:</h3>
 					<?php if(!isset($_SESSION['auth']['user'])): // Если пользователь не авторизован ?>
 					<table class="zakaz-data" border="0" cellspacing="0" cellpadding="0">
-						<tr>
+						<tr class="notauth">
 							<td class="zakaz-txt">ФИО:</td>
 							<td class="zakaz-inpt"><input type="text" name="name" value="<?=$session_order['name']?>"></td>
 							<td class="zakaz-prim">Пример: Иванов Сергей Александрович</td>
 						</tr>
-						<tr>
+						<tr class="notauth">
 							<td class="zakaz-txt">E-Mail:</td>
 							<td class="zakaz-inpt"><input type="text" name="email" value="<?=$session_order['email']?>"></td>
 							<td class="zakaz-prim">Пример: test@mail.ru</td>
 						</tr>
-						<tr>
+						<tr class="notauth">
 							<td class="zakaz-txt">Телефон:</td>
 							<td class="zakaz-inpt"><input type="text" name="phone" value="<?=$session_order['phone']?>"></td>
 							<td class="zakaz-prim">Пример: 8 937 999 99 99</td>
 						</tr>
-						<tr>
+						<tr class="notauth">
 							<td class="zakaz-txt">Адрес доставки:</td>
 							<td class="zakaz-inpt"><input type="text" name="address" value="<?=$session_order['address']?>"></td>
 							<td class="zakaz-prim">Пример: г. Москва, пр. Мира, ул. Петра Великого д.19, кв 51.</td>

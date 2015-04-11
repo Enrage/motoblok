@@ -853,6 +853,7 @@ a.shop_now:hover {
 /* Картинки галереи */
 .detail_img {
 	float: left;
+  height: 200px;
 	width: 280px;
 }
 .detail_img_large {

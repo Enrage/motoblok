@@ -18,7 +18,7 @@ $eyestoppers = $this->get_content()?>
 				<?php else: ?>
 					<p>Здесь товаров пока нет!</p>
 				<?php endif; ?>
-			</section>
+			</section> <!-- .product_grid -->
 		</section> <!-- #products_grid -->
 	</div> <!-- #container_grid -->
 </div> <!-- #content_grid -->

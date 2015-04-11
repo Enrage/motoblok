@@ -2,11 +2,19 @@
 $products = $this->get_content();
 $pos = $this->pos();
 $sort = $this->sort();
-//$bread = $this->bread_crumbs()?>
+$bread = $this->bread_crumbs()?>
 <!-- Content -->
 <div id="content_grid">
 	<div id="container_grid">
 		<section id="products_grid">
+
+			<div class="kroshka">
+			<?php if(count($bread) > 1): // Если подкатегория ?>
+				<a href="<?=PATH?>">Главная</a> >> <a href="?view=cat&amp;category=<?=$bread[0]['brand_id']?>"><?=$bread[0]['brand_name']?></a> >> <span><?=$bread[1]['brand_name']?></span>
+			<?php elseif(count($bread) == 1): // Если не дочерняя категория ?>
+				<a href="<?=PATH?>">Главная</a> >> <span><?=$bread[0]['brand_name']?></span>
+			<?php endif; ?>
+			</div> <!-- .kroshka -->
 			<!-- Вид и сортировка -->
 			<div class="view-sort">
 				Вид:

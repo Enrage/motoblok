@@ -56,7 +56,7 @@ $(document).ready(function() {
 	$(".addtocart").click(function() {
 		var url = $(this).attr('href');
 		var goods_id = $(this).attr('id');
-		var price = $("#products_grid .id_" + goods_id).text();
+		var price = $(".price .id_" + goods_id).text();
 		summ = Number(summ) + Number(price);
 		col++;
 		$.ajax({
@@ -81,33 +81,83 @@ $(document).ready(function() {
 	});
 
 	// Авторизация
-    $('#auth').click(function(e) {
-      e.preventDefault();
-      var login = $('#login').val();
-      var pass = $('#pass').val();
-      var auth = $('#auth').val();
-      $.ajax({
-        url: './',
-        type: 'POST',
-        data: {auth: auth, login: login, pass: pass},
-        success: function(res) {
-          if(res != 'Поля логин/пароль должны быть заполнены!' && res != 'Логин или пароль введены неверно!') {
-            $('.authform').hide();
-            $('.user_login').fadeIn(500).html(res);
-            // Удаляем лишние поля заказа
-            /*$('.notauth').fadeOut(500);
-            setTimeout(function() {
-                $('.notauth').remove();
-            }, 500);*/
-          } else {
-            $('.error').remove();
-            $('.authform').append('<div class="error"></div>');
-            $('.error').hide().fadeIn(500).html(res);
-          }
-        },
-        error: function() {
-          alert('Error');
+  $('#auth').click(function(e) {
+    e.preventDefault();
+    var login = $('#login').val();
+    var pass = $('#pass').val();
+    var auth = $('#auth').val();
+    $.ajax({
+      url: './',
+      type: 'POST',
+      data: {auth: auth, login: login, pass: pass},
+      success: function(res) {
+        if(res != 'Поля логин/пароль должны быть заполнены!' && res != 'Логин или пароль введены неверно!') {
+          $('.authform').hide();
+          $('.user_login').fadeIn(500).html(res);
+          // Удаляем лишние поля заказа
+          $('.notauth').fadeOut(500);
+          setTimeout(function() {
+              $('.notauth').remove();
+          }, 500);
+        } else {
+          $('.error').remove();
+          $('.authform').append('<div class="error"></div>');
+          $('.error').hide().fadeIn(500).html(res);
         }
-      });
+      },
+      error: function() {
+        alert('Error');
+      }
     });
+  });
 });
+
+function One() {
+  // Табы
+  document.getElementById('one_tab').className = 'selected_tab';
+  document.getElementById('two_tab').className = 'tab';
+  document.getElementById('three_tab').className = 'tab';
+  document.getElementById('four_tab').className = 'tab';
+  // Страницы
+  document.getElementById('one').style.display = 'block';
+  document.getElementById('one_tab').className = 'selected_tab';
+  document.getElementById('two').style.display = 'none';
+  document.getElementById('three').style.display = 'none';
+  document.getElementById('four').style.display = 'none';
+}
+function Two() {
+  // Табы
+  document.getElementById('one_tab').className = 'tab';
+  document.getElementById('two_tab').className = 'selected_tab';
+  document.getElementById('three_tab').className = 'tab';
+  document.getElementById('four_tab').className = 'tab';
+  // Страницы
+  document.getElementById('one').style.display = 'none';
+  document.getElementById('two').style.display = 'block';
+  document.getElementById('three').style.display = 'none';
+  document.getElementById('four').style.display = 'none';
+}
+function Three() {
+  // Табы
+  document.getElementById('one_tab').className = 'tab';
+  document.getElementById('two_tab').className = 'tab';
+  document.getElementById('three_tab').className = 'selected_tab';
+  document.getElementById('four_tab').className = 'tab';
+  // Страницы
+  document.getElementById('one').style.display = 'none';
+  document.getElementById('two').style.display = 'none';
+  document.getElementById('three').style.display = 'block';
+  document.getElementById('four').style.display = 'none';
+}
+function Four() {
+  // Табы
+  document.getElementById('one_tab').className = 'tab';
+  document.getElementById('two_tab').className = 'tab';
+  document.getElementById('three_tab').className = 'tab';
+  document.getElementById('four_tab').className = 'selected_tab';
+  // Страницы
+  document.getElementById('one').style.display = 'none';
+  document.getElementById('two').style.display = 'none';
+  document.getElementById('three').style.display = 'none';
+  document.getElementById('four').style.display = 'block';
+}
