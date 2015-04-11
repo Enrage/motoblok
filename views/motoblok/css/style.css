@@ -241,7 +241,7 @@ header {
   border: 1px solid #765858;
   color: #7f5354;
   font: 14px Roboto, sans-serif;
-  margin: 10px 10px 0;
+  margin: 10px;
   padding: 10px;
 }
 .success {
@@ -249,8 +249,8 @@ header {
   border: 1px solid #adc092;
   color: #58715e;
   font: 14px Roboto, sans-serif;
-  margin: 10px 10px 0;
-  padding: 8px 4px;
+  margin: 10px;
+  padding: 10px;
 }
 .error ul {
   list-style: disc outside none;
@@ -703,7 +703,7 @@ a.shop_now:hover {
 .product_grid article {
   width: 176px;
 }
-.product_grid h3 {
+.product_grid h3, #products_grid h3 {
   color: #c5003d;
   font: 18px Roboto, sans-serif;
   margin: 10px 0 10px 10px;
@@ -1016,10 +1016,22 @@ ul#tabs {
 .z_img {
   width: 270px;
 }
+.z_img a {
+  display: block;
+  margin: 10px 0;
+}
 .z_name {
   border-left: 0;
+  text-align: left;
+  padding: 10px;
+}
+.z_name a {
   color: #626262;
-  font: 13px Roboto, sans-serif;
+  font: 14px Roboto, sans-serif;
+  text-decoration: none;
+}
+.z_name a:hover {
+  text-decoration: underline;
 }
 .z_price {
   color: #c5003d;
@@ -1127,6 +1139,11 @@ ul#tabs {
 }
 .zakaz:hover {
   background: #eb0048;
+}
+.empty_cart {
+  color: #333;
+  font: 14px Roboto, sans-serif;
+  margin: 10px;
 }
 
 

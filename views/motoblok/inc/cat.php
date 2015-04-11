@@ -30,7 +30,7 @@ $sort = $this->sort();
 			<section class="product_grid">
 				<article>
 					<h2><a href="?view=product&amp;goods_id=<?=$product['goods_id']?>"><?=$product['name']?></a></h2>
-					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img"><img src="<?=TEMPLATE?>img/<?=$product['img']?>" width="140" alt="<?=$product['name']?>"></a>
+					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$product['img']?>" width="140" alt="<?=$product['name']?>"></a>
 					<p class="price"><span class="id_<?=$product['goods_id']?>"><?=$product['price']?></span> руб.</p>
 					<div> <!-- Иконка новинка -->
 						<?php if($product['news']) { ?>
@@ -43,7 +43,7 @@ $sort = $this->sort();
 			<?php else: // Если линейный вид ?>
 			<section class="product_line">
 				<article>
-					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img"><img src="<?=TEMPLATE?>img/<?=$product['img']?>" width="93" alt="<?=$product['name']?>"></a>
+					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$product['img']?>" width="93" alt="<?=$product['name']?>"></a>
 					<h2><a href="?view=product&amp;goods_id=<?=$product['goods_id']?>"><?=$product['name']?></a></h2>
 					<p class="description"><?=$product['anons']?></p>
 					<p class="price"><span class="id_<?=$product['goods_id']?>"><?=$product['price']?></span> руб.</p>

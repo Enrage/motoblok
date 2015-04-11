@@ -304,5 +304,171 @@ class model {
 			}
 		}
 	}
+
+	// Способы доставки
+	public function get_dostavka() {
+		$query = "SELECT * FROM dostavka";
+		try {
+			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error Prepare get_dostavka");
+			$stmt->execute();
+			$stmt->bind_result($dostavka_id, $name);
+			$row = array();
+			while($stmt->fetch()) {
+				$row[] = array(
+					'dostavka_id' => $dostavka_id,
+					'name' => $name);
+			}
+			$stmt->close();
+		}
+		catch(Exception $e) {
+			print 'Ошибка: '. $e->getMessage();
+			die();
+		}
+		return $row;
+	}
+
+	// Добавление заказа
+	public function add_order() {
+		if(isset($_POST['dostavka'])) $dostavka_id = (int)$_POST['dostavka'];
+		if(!isset($dostavka_id)) $dostavka_id = 1;
+		$prim = $this->func->clr($_POST['prim']);
+		if(isset($_SESSION['auth']['user'])) $customer_id = $_SESSION['auth']['customer_id'];
+		if(!isset($_SESSION['auth']['user'])) {
+			$error = ""; // Флаг проверки пустых полей
+			$name = trim($_POST['name']);
+			$email = trim($_POST['email']);
+			$phone = trim($_POST['phone']);
+			$address = trim($_POST['address']);
+			if(empty($name)) $error .= '<li>Не указано Ф.И.О.</li>';
+			if(empty($email)) $error .= '<li>Не указан Email</li>';
+			if(empty($phone)) $error .= '<li>Не указан телефон</li>';
+			if(empty($address)) $error .= '<li>Не указан адрес</li>';
+
+			if(empty($error)) {
+				// Добавляем гостя в заказчики
+				$customer_id = $this->add_customer($name, $email, $phone, $address);
+				if(!$customer_id) return false; // Прекращение выполнение в случае ошибки
+			} else {
+				// Если не заполнены обязательные поля
+				$_SESSION['order']['res'] = "<div class='error'>Не заполнены обязательные поля: <ul> $error </ul></div>";
+				$_SESSION['order']['name'] = $name;
+				$_SESSION['order']['email'] = $email;
+				$_SESSION['order']['phone'] = $phone;
+				$_SESSION['order']['address'] = $address;
+				$_SESSION['order']['prim'] = $prim;
+				return false;
+			}
+		}
+		$_SESSION['order']['email'] = $email;
+		$this->save_order($customer_id, $dostavka_id, $prim);
+	}
+
+	// Добавление заказчика-гостя
+	public function add_customer($name, $email, $phone, $address) {
+		$name = $this->func->clr($_POST['name']);
+		$email = $this->func->clr($_POST['email']);
+		$phone = $this->func->clr($_POST['phone']);
+		$address = $this->func->clr($_POST['address']);
+		$query = "INSERT INTO customers (name, email, phone, address) VALUES (?, ?, ?, ?)";
+		try {
+			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error Prepare add_customer");
+			$stmt->bind_param('ssss', $name, $email, $phone, $address);
+			$stmt->execute();
+			if($stmt->affected_rows > 0) {
+				return $stmt->insert_id;
+			} else {
+				// Если произошла ошибка при добавлении
+				$_SESSION['order']['res'] = "<div class='error'>Произошла ошибка при регистрации заказа</div>";
+				$_SESSION['order']['name'] = $name;
+				$_SESSION['order']['email'] = $email;
+				$_SESSION['order']['phone'] = $phone;
+				$_SESSION['order']['address'] = $address;
+				$_SESSION['order']['prim'] = $prim;
+				return false;
+			}
+			$stmt->close();
+		} catch(Exception $e) {
+			print 'Ошибка: '.$e->getMessage();
+			die();
+		}
+	}
+
+	// Сохранение заказа
+	public function save_order($customer_id, $dostavka_id, $prim) {
+		$prim = $this->func->clr($prim);
+		$query = "INSERT INTO orders (customer_id, date, dostavka_id, prim) VALUES (?, ?, ?, ?)";
+		try {
+			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error prepare insert orders");
+			$date = date('Y-m-d H:i:s');
+			$stmt->bind_param('isis', $customer_id, $date, $dostavka_id, $prim);
+			$stmt->execute();
+			if($stmt->affected_rows == -1) {
+				// Если не получилось сохранить заказ - удаляем заказчика
+				$login = '';
+				if(!$stmt = $this->mysqli->prepare("DELETE FROM customers WHERE customer_id = ? AND login = ?")) {
+					throw new Exception("Error prepare delete customers");
+				}
+				$stmt->bind_param('is', $customer_id, $login);
+				$stmt->execute();
+				return false;
+			}
+			$order_id = $stmt->insert_id; // ID сохраненного заказа
+			$val = '';
+			foreach($_SESSION['cart'] as $goods_id => $value) {
+				$val .= "($order_id, $goods_id, {$value['qty']}),";
+			}
+			$val = substr($val, 0, -1); // Удаляем последнюю запятую
+			$query = "INSERT INTO zakaz_tovar (orders_id, goods_id, quantity) VALUES $val";
+			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error prepare insert zakaz_tovar");
+			$stmt->execute();
+			if($stmt->affected_rows == -1) {
+				// Если не выгрузился заказ - удаляем заказчика (customers) и заказ (orders)
+				$login = '';
+				if(!$stmt = $this->mysqli->prepare("DELETE FROM orders WHERE order_id = ?")) {
+					throw new Exception("Error prepare delete from orders");
+				}
+				$stmt->bind_param('i', $order_id);
+				$stmt->execute();
+				if(!$stmt = $this->mysqli->prepare("DELETE FROM customers WHERE customer_id = ? AND login = ?")) {
+					throw new Exception("Error prepare delete from customers");
+				}
+				$stmt->bind_param('is', $customer_id, $login);
+				$stmt->execute();
+				return false;
+			}
+			$stmt->close();
+			if(isset($_SESSION['auth']['email'])) $email = $_SESSION['auth']['email'];
+			else $email = $_SESSION['order']['email'];
+			$this->mail_order($order_id, $email);
+			// Если заказ выгрузился
+			unset($_SESSION['cart']);
+			unset($_SESSION['total_sum']);
+			unset($_SESSION['total_quantity']);
+			$_SESSION['order']['res'] = "<div class='success'>Спасибо за Ваш заказ. В ближайшее время с Вами свяжется менеджер для согласования заказа.</div>";
+			return true;
+		} catch(Exception $e) {
+			print 'Ошибка: '.$e->getMessage();
+			die();
+		}
+	}
+
+	// Отправление уведомлений о заказе на email
+	public function mail_order($order_id, $email) {
+		// Тема письма
+		$subject = "Заказ в интернет-магазине";
+		// Заголовки
+		$headers .= "Content-type: text/plain; charset=utf-8\r\n";
+		$headers .= "From: SHOP";
+		// Тело письма
+		$mail_body = "Благодарим Вас за заказ!\r\nНомер Вашего заказа - {$order_id}\r\n\r\nЗаказанные товары:\r\n";
+		// Атрибуты товара
+		foreach($_SESSION['cart'] as $goods_id => $value) {
+			$mail_body .= "Наименование: {$value['name']}, Цена: {$value['price']}, Количество: {$value['qty']} шт.\r\n";
+		}
+		$mail_body .= "\r\nИтого: {$_SESSION['total_quantity']} на сумму: {$_SESSION['total_sum']}";
+		// отправка писем
+		mail($email, $subject, $mail_body, $headers);
+		mail(ADMIN_EMAIL, $subject, $mail_body, $headers);
+	}
 }
 ?>

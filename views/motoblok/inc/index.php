@@ -3,7 +3,9 @@ defined('SHOP') or die('Access Denied');
 require_once 'header.php';
 require_once 'top_menu.php';
 require_once 'cat_top_menu.php';
-require_once 'leftbar.php';
+if(!isset($_GET['view']) || $_GET['view'] != 'cart') {
+	require_once 'leftbar.php';
+}
 require_once $inc.'.php';
 if(isset($_GET['view'])) {
 	if($_GET['view'] != 'main' && $_GET['view'] != 'cart') {
