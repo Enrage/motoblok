@@ -1,3 +1,4 @@
+<?php defined('SHOP') or die('Access Denied')?>
 <!-- Leftbar -->
 <aside id="leftbar">
 	<!-- Eyestoppers -->

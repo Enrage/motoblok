@@ -1,5 +1,4 @@
-<?php
-defined('SHOP') or die('Access Denied');
+<?php defined('SHOP') or die('Access Denied');
 $cat = $this->m->catalog()?>
 <!-- Menu Categories -->
 <nav id="cat_top_menu">

@@ -1,3 +1,4 @@
+<?php defined('SHOP') or die('Access Denied')?>
 <!-- Rightbar -->
 <aside id="rightbar">
 	<div class="user_login">

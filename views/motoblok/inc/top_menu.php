@@ -1,10 +1,11 @@
+<?php defined('SHOP') or die('Access Denied')?>
 	<!-- Top Menu -->
 	<nav class="top_menu">
 		<ul>
-			<li><a href="#">О магазине</a></li>
-			<li><a href="#">Сервис</a></li>
-			<li><a href="#">Доставка</a></li>
-			<li><a href="#">Контакты</a></li>
+			<li><a href="?view=informer&amp;informer_id=1">О магазине</a></li>
+			<li><a href="?view=informer&amp;informer_id=6">Сервис</a></li>
+			<li><a href="?view=informer&amp;informer_id=7">Доставка</a></li>
+			<li><a href="?view=informer&amp;informer_id=3">Контакты</a></li>
 			<?php if(!isset($_SESSION['auth']['user'])): ?>
 			<li><a href="#" class="auth_login">Вход</a></li>
 			<li><a href="?view=reg">Регистрация</a></li>

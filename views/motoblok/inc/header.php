@@ -1,7 +1,33 @@
+<?php defined('SHOP') or die('Access Denied');
+$meta_words = new meta();
+$meta = $meta_words->get_content();
+
+	//case 'cat':
+	//	foreach($cat as $key => $item) {
+	//		if(count($item) > 1) {
+	//			$title = $item[0]; }
+			 /*else {
+				foreach($item['sub'] as $key => $sub) {
+					$title = $sub;
+				}
+			}*/
+	//	}
+		// for($i = 1; $i <= count($brands) ; $i++) {
+		// 	$title = $brands[$i][0]['brand_name'];
+		// }
+	//break;
+// 		default:
+// 			# code...
+// 			break;
+// }
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
+	<meta name="keywords" content="<?=$meta['keywords']?>">
+	<meta name="description" content="<?=$meta['description']?>">
+	<meta name="rights" content="Интернет-магазин &quot;Все мотоблоки&quot;">
 	<link rel="stylesheet" type="text/css" href="<?=TEMPLATE?>css/style.css">
 	<script src="<?=TEMPLATE?>js/jquery-1.11.1.js" type="text/javascript"></script>
 	<script src="<?=TEMPLATE?>js/jquery-2.1.1.js" type="text/javascript"></script>
@@ -24,11 +50,11 @@
 	<script type="text/javascript" src="<?=TEMPLATE?>js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="<?=TEMPLATE?>js/script.js"></script>
 	<script type="text/javascript" src="<?=TEMPLATE?>js/fancybox/jquery.fancybox.pack.js"></script>
-	<script src="<?=TEMPLATE?>js/mobilyslider.js" type="text/javascript"></script>
-	<script src="<?=TEMPLATE?>js/init.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<?=TEMPLATE?>js/mobilyslider.js" ></script>
+	<script type="text/javascript" src="<?=TEMPLATE?>js/init.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?=TEMPLATE?>js/fancybox/jquery.fancybox.css" media="screen">
 	<script type="text/javascript">var query = '<?=$_SERVER['QUERY_STRING']?>';</script>
-	<title><?=TITLE?></title>
+	<title><?=$meta['title']?></title>
 </head>
 <body>
 <div id="wrapper">
@@ -39,7 +65,7 @@
 			<form action="" method="get">
 				<input type="hidden" name="view" value="search">
 				<input type="text" name="search" id="input_search">
-				<input type="submit" name="" id="search">
+				<input type="submit" name="" value="" id="search">
 			</form>
 		</div> <!-- .search -->
 

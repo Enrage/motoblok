@@ -11,7 +11,7 @@ class model {
 
 	// Массив категорий
 	public function catalog() {
-		$query = "SELECT * FROM brands ORDER BY brand_id";
+		$query = "SELECT brand_id, brand_name, parent_id FROM brands ORDER BY brand_id";
 		try {
 			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error Prepare catalog");
 			$stmt->execute();
@@ -33,6 +33,24 @@ class model {
 			print 'Ошибка: '. $e->getMessage();
 			die();
 		}
+		return $cat;
+	}
+
+	// Массив категорий
+	public function meta_cat() {
+		$query = "SELECT brand_id, brand_name, keywords, description FROM brands";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($brand_id, $brand_name, $keywords, $description);
+		$cat = array();
+		while($stmt->fetch()) {
+			$cat[] = array(
+				'brand_id' => $brand_id,
+				'brand_name' => $brand_name,
+				'keywords' => $keywords,
+				'description' => $description);
+		}
+		$stmt->close();
 		return $cat;
 	}
 
@@ -63,6 +81,23 @@ class model {
 			die();
 		}
 		return $informers;
+	}
+
+	public function informer_links() {
+		$query = "SELECT link_id, link_name, keywords, description FROM links";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($link_id, $link_name, $keywords, $description);
+		$links = array();
+		while($stmt->fetch()) {
+			$links[] = array(
+				'link_id' => $link_id,
+				'link_name' => $link_name,
+				'keywords' => $keywords,
+				'description' => $description);
+		}
+		$stmt->close();
+		return $links;
 	}
 
 	// Получение текста информера

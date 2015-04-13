@@ -2,12 +2,12 @@
 defined('SHOP') or die('Access Denied');
 class cat extends Core {
 	public function get_content() {
-		$param = $this->pos();
+		$pos = $this->pos();
 		$sort = $this->sort();
 		if(isset($_GET['category'])) {
 			$category = abs((int)$_GET['category']);
 			$perpage = PERPAGE;
-			$res = $this->m->products($category, $sort['order_db'], $param['start_pos'], $perpage);
+			$res = $this->m->products($category, $sort['order_db'], $pos['start_pos'], $perpage);
 		} else $res = "<div class='error'>Нет такой категории!</div>";
 		return $res;
 	}
@@ -23,7 +23,7 @@ class cat extends Core {
 			$category = abs((int)$_GET['category']);
 			$perpage = PERPAGE;
 			if(isset($_GET['page'])) {
-				$page = (int)$_GET['page'];
+				$page = abs((int)$_GET['page']);
 				if($page < 1) $page = 1;
 			} else $page = 1;
 			$count_rows = $this->m->count_rows($category);

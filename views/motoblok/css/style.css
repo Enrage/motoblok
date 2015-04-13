@@ -157,7 +157,6 @@ header {
 /* Уведомление о добавлении товара в корзину */
 .alert_cart {
   background: #c5003d;
-  border: 1px solid red;
   color: #fff;
   display: none;
   font: 19px Roboto, sans-serif;

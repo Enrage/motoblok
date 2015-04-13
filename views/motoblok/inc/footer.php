@@ -1,5 +1,4 @@
-<?php
-defined('SHOP') or die('Access Denied');
+<?php defined('SHOP') or die('Access Denied');
 $informers = $this->m->informers()?>
 <footer>
 	<?php foreach($informers as $informer): ?>
