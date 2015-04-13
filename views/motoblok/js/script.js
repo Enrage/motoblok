@@ -71,6 +71,7 @@ $(document).ready(function() {
 					$('#bought').text(col); // Запись в нужные места на странице
 	        $('#sum').text(summ);
 	        $('.oformit').fadeIn();
+          $('.alert_cart').fadeIn('slow', 'linear').delay(1200).fadeOut('slow', 'linear');
 				}
 			},
 			error: function() {

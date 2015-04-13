@@ -37,14 +37,15 @@
 		<!-- Search -->
 		<div class="search">
 			<form action="" method="get">
+				<input type="hidden" name="view" value="search">
 				<input type="text" name="search" id="input_search">
-				<input type="submit" name="submit" value="" id="search">
+				<input type="submit" name="" id="search">
 			</form>
 		</div> <!-- .search -->
 
 		<div class="logo">
 			<!-- <a href="#"><img src="img/logo_main.png" width="270" alt="logo"></a> -->
-			<a href="#"><img src="<?=TEMPLATE?>img/logotip2.jpg" width="350" alt="logo"></a>
+			<a href="<?=PATH?>"><img src="<?=TEMPLATE?>img/logotip2.jpg" width="350" alt="logo"></a>
 		</div> <!-- .logo -->
 
 		<!-- Contacts -->

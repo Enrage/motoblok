@@ -143,8 +143,8 @@ header {
 }
 .top_menu li:last-child {
   position: relative;
-  top: 12px;
   padding: 0 10px;
+  top: 12px;
 }
 .top_menu li:last-child p {
   margin: 5px 0;
@@ -154,17 +154,35 @@ header {
   top: 4px;
 }
 
+/* Уведомление о добавлении товара в корзину */
+.alert_cart {
+  background: #c5003d;
+  border: 1px solid red;
+  color: #fff;
+  display: none;
+  font: 19px Roboto, sans-serif;
+  left: 50%;
+  margin-left: -140px;
+  margin-top: -34px;
+  padding: 25px 0;
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  width: 280px;
+  z-index: 100;
+}
+
 /* Авторизация */
 .authform {
   background: #cfc;
   border: 1px solid #666;
   display: none;
   left: 225px;
-  top: 60px;
   padding: 10px;
   position: absolute;
-  z-index: 100;
+  top: 60px;
   width: 200px;
+  z-index: 100;
 }
 .authform label {
   color: #c5003d;
@@ -688,7 +706,7 @@ a.shop_now:hover {
   top: 20px;
   color: #414141;
   font: bold 14px Roboto, sans-serif;
-  margin: 0 0 25px 20px;
+  margin: 0 0 30px 20px;
 }
 
 .product article, .product_grid article {
