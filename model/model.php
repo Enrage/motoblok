@@ -529,5 +529,41 @@ class model {
 		}
 		return $brandname;
 	}
+
+	// Поиск
+	public function search() {
+		if(isset($_GET['search'])) $search = '%'.$this->func->clr($_GET['search']).'%';
+		$result_search = array();
+		if(empty($_GET['search'])) {
+			$result_search['notfound'] = "<div class='error'>Поле поиск должно быть заполнено!</div>";
+		} elseif(mb_strlen($search, 'UTF-8') < 6) {
+			$result_search['notfound'] = "<div class='error'>Поисковый запрос должен содержать не менее 4-х символов!</div>";
+		} else {
+			$visible = '1';
+			$query = "SELECT goods_id, name, img, price, hits, news, sale FROM goods WHERE name LIKE ? AND visible = ?";
+			$stmt = $this->mysqli->prepare($query);
+			$stmt->bind_param('ss', $search, $visible);
+			$stmt->execute();
+			$stmt->bind_result($goods_id, $name, $img, $price, $hits, $news, $sale);
+			$stmt->store_result();
+			if($stmt->num_rows > 0) {
+				$result_search = array();
+				while($stmt->fetch()) {
+					$result_search[] = array(
+						'goods_id' => $goods_id,
+						'name' => $name,
+						'img' => $img,
+						'price' => $price,
+						'hits' => $hits,
+						'news' => $news,
+						'sale' => $sale);
+				}
+			} else {
+				$result_search['notfound'] = "<div class='error'>По вашему запросу ничего не найдено!</div>";
+			}
+			$stmt->close();
+		}
+		return $result_search;
+	}
 }
 ?>
