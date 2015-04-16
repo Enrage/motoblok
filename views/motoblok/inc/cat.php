@@ -40,7 +40,7 @@ $bread = $this->bread_crumbs()?>
 					<h2><a href="?view=product&amp;goods_id=<?=$product['goods_id']?>"><?=$product['name']?></a></h2>
 					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$product['img']?>" width="140" alt="<?=$product['name']?>"></a>
 					<p class="price"><span class="id_<?=$product['goods_id']?>"><?=$product['price']?></span> руб.</p>
-					<div> <!-- Иконка новинка -->
+					<div class="img_new"> <!-- Иконка новинка -->
 						<?php if($product['news']) { ?>
 						<img src="<?=TEMPLATE?>img/new.png" alt="новинка" width="60">
 						<?php } ?>

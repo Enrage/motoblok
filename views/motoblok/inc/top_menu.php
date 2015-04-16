@@ -26,6 +26,3 @@
 		</div> <!-- .authform -->
 	</nav> <!-- .top_menu -->
 </header>
-<div class="alert_cart">
-	<p>Товар добавлен в корзину</p>
-</div>

@@ -163,6 +163,11 @@ header {
   left: 50%;
   margin-left: -140px;
   margin-top: -34px;
+  opacity: 0.6;
+  -moz-opacity: 0.6;
+  -o-opacity: 0.6;
+  -webkit-opacity: 0.6;
+  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=60);
   padding: 25px 0;
   position: fixed;
   text-align: center;
@@ -321,7 +326,7 @@ header {
   margin: 0 0 0 0px;
   padding: 0;
   list-style: none;
-  z-index: 10;
+  z-index: 50;
   width: 290px
 }
 #cat_top_menu li ul li {
@@ -980,6 +985,11 @@ ul#tabs {
 }
 #one, #two, #three, #four {
   padding: 10px;
+}
+#content_tabs p {
+  color: #333;
+  font: 14px Roboto, sans-serif;
+  margin: 5px 0 15px;
 }
 
 /* Корзина */

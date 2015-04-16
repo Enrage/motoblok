@@ -41,9 +41,12 @@
 	top: -5px;
 }
 
+.authform {
+	z-index: 120 !important;
+}
 #cat_top_menu {
 	position: relative;
-	z-index: 20;
+	z-index: 50px !important;
 }
 #cat_top_menu li.main_cat {
 	float: left;
@@ -53,15 +56,24 @@
 	display: block;
 	width: 115px;
 	padding: 6px 0 0;
+	position: relative !important;
 	height: 21px;
+	z-index: 50 !important;
+}
+.main_cat ul {
+	position: absolute !important;
+	z-index: 50 !important;
 }
 .main_cat ul li a {
-	width: 200px !important;
+	position: absolute !important;
+	z-index: 50 !important;
+	width: 305px !important;
 }
 
-.discount_block {
-	background: url(../img/discount_block.png) repeat;
-  width: 219px;
+.product_grid article, .product_line article {
+	height: 220px;
+	position: relative;
+	z-index: 0 !important;
 }
 
 .panel_offer {
@@ -76,6 +88,18 @@
 .product_grid {
 	margin: 0 0 0 -10px;
 }
+
+.img_new {
+	border: 1px solid #ccc;
+  left: 10px !important;
+  position: absolute !important;
+  top: 75px !important;
+}
+
+.product_grid article .product_img {
+	height: 60px !important;
+}
+
 .continue_shopping a {
 	position: relative;
 	left: -400px;
@@ -83,6 +107,8 @@
 
 #rightbar {
   width: 212px;
+	position: relative;
+	z-index: -1 !important;
 }
 
 footer {

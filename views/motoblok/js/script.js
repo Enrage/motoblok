@@ -81,6 +81,44 @@ $(document).ready(function() {
 		return false;
 	});
 
+  // Клавина ENTER при пересчете
+  $('.kolvo').keypress(function(e) {
+    if(e.which == 13) {
+      return false;
+    }
+  });
+
+  // Пересчет товаров в корзине
+  $('.kolvo').each(function() {
+    var qty_start = $(this).val(); // Кол-во до изменения
+    $(this).change(function() {
+      var qty = $(this).val(); // Кол-во перед пересчетом
+      var res = confirm('Пересчитать корзину?');
+      if(res) {
+        var id = $(this).attr('id');
+        id = id.substr(3);
+        console.log(id);
+        if(!parseInt(qty)) {
+          qty = qty_start;
+        }
+        // Передаем параметры
+        window.location = '?view=cart&qty=' + qty + '&id=' + id;
+      } else {
+        $(this).val(qty_start);
+      }
+    });
+  });
+
+  // Подтверждение удаления товара из корзины
+  $('.z_del a').click(function() {
+    var res = confirm('Удалить из корзины?');
+    if(res) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
 	// Авторизация
   $('#auth').click(function(e) {
     e.preventDefault();

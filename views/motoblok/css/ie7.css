@@ -1,15 +1,22 @@
 .search form input[type=submit] {
 	margin: -20px 7px 0 0 !important;
 }
+.top_menu {
+	z-index: 120;
+}
 .top_menu li {
 	display: inline;
 }
 .top_menu ul li p {
 	margin: 5px 10px;
 }
+.authform {
+	z-index: 120 !important;
+}
+
 #cat_top_menu {
 	position: relative;
-	z-index: 20;
+	z-index: -1 !important;
 }
 #cat_top_menu li.main_cat {
 	float: left;
@@ -22,11 +29,34 @@
 	height: 21px;
 }
 .main_cat ul li a {
-	width: 200px !important;
+	width: 305px !important;
 }
+
+.view-sort {
+	z-index: -1 !important;
+}
+.sort-wrap {
+	z-index: 110 !important;
+}
+
+#slider {
+	position: relative;
+	z-index: -1;
+}
+
+.product_grid article, .product_line article {
+	position: relative;
+	z-index: -1 !important;
+}
+
 .continue_shopping a {
 	position: relative;
 	left: -400px;
+}
+
+#rightbar {
+	position: relative;
+	z-index: -1 !important;
 }
 footer {
 	margin-top: 0;

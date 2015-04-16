@@ -1,25 +1,6 @@
 <?php defined('SHOP') or die('Access Denied');
 $meta_words = new meta();
 $meta = $meta_words->get_content();
-
-	//case 'cat':
-	//	foreach($cat as $key => $item) {
-	//		if(count($item) > 1) {
-	//			$title = $item[0]; }
-			 /*else {
-				foreach($item['sub'] as $key => $sub) {
-					$title = $sub;
-				}
-			}*/
-	//	}
-		// for($i = 1; $i <= count($brands) ; $i++) {
-		// 	$title = $brands[$i][0]['brand_name'];
-		// }
-	//break;
-// 		default:
-// 			# code...
-// 			break;
-// }
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -30,7 +11,6 @@ $meta = $meta_words->get_content();
 	<meta name="rights" content="Интернет-магазин &quot;Все мотоблоки&quot;">
 	<link rel="stylesheet" type="text/css" href="<?=TEMPLATE?>css/style.css">
 	<script src="<?=TEMPLATE?>js/jquery-1.11.1.js" type="text/javascript"></script>
-	<script src="<?=TEMPLATE?>js/jquery-2.1.1.js" type="text/javascript"></script>
 	<!--[if IE]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -82,3 +62,7 @@ $meta = $meta_words->get_content();
 			<span>с 8:00 до 22:00</span><br>
 			<span>(Пн - Вс)</span></p>
 		</section> <!-- .time_contact -->
+
+		<div class="alert_cart">
+			<p>Товар добавлен в корзину</p>
+		</div>
