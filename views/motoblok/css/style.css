@@ -318,6 +318,14 @@ header {
 #cat_top_menu li:nth-child(3) a {
   width: 1700px;
 }
+#cat_top_menu li:nth-child(7) ul {
+  position: absolute;
+  left: -83px;
+}
+#cat_top_menu li:nth-child(8) ul {
+  position: absolute;
+  left: -199px;
+}
 /* Выпадающее меню */
 #cat_top_menu li ul {
   position: absolute;

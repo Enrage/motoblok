@@ -11,10 +11,10 @@ $(document).ready(function() {
 	// Выпадающее меню
 	$('#cat_top_menu li').hover(function() {
 		//показать подменю
-		$('ul', this).stop().slideDown(200);
+		$('ul', this).stop().slideDown(400);
   }, function () {
 		//скрыть подменю
-		$('ul', this).stop().slideUp(50);
+		$('ul', this).stop().slideUp(100);
   });
 
   // Переключатель вида
