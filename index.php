@@ -2,7 +2,6 @@
 define('SHOP', true);
 session_start();
 header("Content-Type:text/html;charset=UTF-8");
-require_once 'config.php';
 function __autoload($c) {
 	if(file_exists("controller/".$c.".php")) {
 		require_once 'controller/'.$c.'.php';

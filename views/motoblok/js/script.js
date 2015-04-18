@@ -112,11 +112,7 @@ $(document).ready(function() {
   // Подтверждение удаления товара из корзины
   $('.z_del a').click(function() {
     var res = confirm('Удалить из корзины?');
-    if(res) {
-      return true;
-    } else {
-      return false;
-    }
+    if(!res) return false;
   });
 
 	// Авторизация

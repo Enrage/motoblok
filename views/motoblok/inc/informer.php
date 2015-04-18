@@ -1,11 +1,10 @@
-<?php defined('SHOP') or die('Access Denied');
-$text_informer = $this->get_content()?>
+<?php defined('SHOP') or die('Access Denied')?>
 <div id="content_informer">
 	<div id="container">
 		<section class="informer">
-			<?php if(!empty($text_informer)): ?>
-			<h3><?=$text_informer[0]['link_name']?></h3>
-			<?=$text_informer[0]['text']?>
+			<?php if(!empty($content)): ?>
+			<h3><?=$content[0]['link_name']?></h3>
+			<?=$content[0]['text']?>
 			<?php else: ?>
 			<p>Такой страницы нет!</p>
 			<?php endif; ?>

@@ -1,5 +1,4 @@
 <?php defined('SHOP') or die('Access Denied');
-$dostavka = $this->get_content();
 $session_order = $this->session_order()?>
 <!-- Content -->
 <div id="content_grid">
@@ -35,7 +34,7 @@ $session_order = $this->session_order()?>
 				</div> <!-- #cart -->
 				<div class="sposob_dostavki">
 					<h3>Способы доставки:</h3>
-					<?php foreach($dostavka as $item): ?>
+					<?php foreach($content as $item): ?>
 					<p><input type="radio" name="dostavka" value="<?=$item['dostavka_id']?>" id="id<?=$item['dostavka_id']?>"><label for="id<?=$item['dostavka_id']?>"><?=$item['name']?></label></p>
 					<?php endforeach; ?>
 				</div>

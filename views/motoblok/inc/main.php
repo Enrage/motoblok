@@ -1,5 +1,4 @@
-<?php defined('SHOP') or die('Access Denied');
-$product = $this->get_content()?>
+<?php defined('SHOP') or die('Access Denied')?>
 <div id="content">
 	<div id="container">
 		<section id="slider">
@@ -40,8 +39,8 @@ $product = $this->get_content()?>
 		<div id="products">
 			<h4>Хиты продаж</h4>
 			<section class="product">
-				<?php if(isset($product)): ?>
-				<?php foreach($product as $item): ?>
+				<?php if(isset($content)): ?>
+				<?php foreach($content as $item): ?>
 				<article>
 					<h2><a href="?view=product&amp;goods_id=<?=$item['goods_id']?>"><?=$item['name']?></a></h2>
 					<a href="?view=product&amp;goods_id=<?=$item['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$item['img']?>" width="130" alt="<?=$item['name']?>"></a>

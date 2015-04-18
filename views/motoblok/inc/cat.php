@@ -1,5 +1,4 @@
 <?php defined('SHOP') or die('Access Denied');
-$products = $this->get_content();
 $pos = $this->pos();
 $sort = $this->sort();
 $bread = $this->bread_crumbs()?>
@@ -32,8 +31,8 @@ $bread = $this->bread_crumbs()?>
 				</div>
 			</div>
 
-			<?php if(!empty($products) && isset($_GET['category'])): // Если получены товары категории ?>
-			<?php foreach($products as $product): ?>
+			<?php if(!empty($content) && isset($_GET['category'])): // Если получены товары категории ?>
+			<?php foreach($content as $product): ?>
 			<?php if(!isset($_COOKIE['display']) OR $_COOKIE['display'] == 'grid'): // Если вид сетка ?>
 			<section class="product_grid">
 				<article>

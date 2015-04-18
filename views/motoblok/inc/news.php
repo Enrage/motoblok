@@ -1,13 +1,12 @@
-<?php defined('SHOP') or die('Access Denied');
-$eyestoppers = $this->get_content()?>
+<?php defined('SHOP') or die('Access Denied')?>
 <!-- Content -->
 <div id="content_grid">
 	<div id="container_grid">
 		<section id="products_grid">
 			<section class="product_grid">
 				<h3>Новинки</h3>
-				<?php if(isset($eyestoppers)): ?>
-				<?php foreach($eyestoppers as $item): ?>
+				<?php if(isset($content)): ?>
+				<?php foreach($content as $item): ?>
 				<article>
 					<h2><a href="?view=product&amp;goods_id=<?=$item['goods_id']?>"><?=$item['name']?></a></h2>
 					<a href="?view=product&amp;goods_id=<?=$item['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$item['img']?>" width="140" alt="<?=$item['name']?>"></a>

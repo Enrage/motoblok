@@ -9,7 +9,6 @@ $cat = $this->m->catalog()?>
 		<ul class="nav-left">
 			<li><a href="?view=orders">Заказы</a></li>
 			<li><a href="?view=brands">Каталог товаров</a></li>
-			<!-- <li><a href="?view=edit_pages">Основные страницы</a></li> -->
 			<li><a href="#" class="catalog_admin">Товары</a>
 				<ul class="categories">
 				<?php foreach($cat as $key => $item): // Если это родительская категория ?>

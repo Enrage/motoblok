@@ -1,29 +1,28 @@
 <?php defined('SHOP') or die('Access Denied');
-$goods = $this->get_content();
 $bread = $this->bread()?>
 <div id="content_product">
 	<div id="container_product">
-		<?php if(isset($goods)): ?>
+		<?php if(isset($content)): ?>
 		<section id="product">
 			<div class="kroshka">
 				<?php if(count($bread) > 1): // Если подкатегория ?>
-				<a href="<?=PATH?>">Главная</a> >> <a href="?view=cat&amp;category=<?=$bread[0]['brand_id']?>"><?=$bread[0]['brand_name']?></a> >> <a href="?view=cat&amp;category=<?=$bread[1]['brand_id']?>"><?=$bread[1]['brand_name']?></a> >> <span><?=$goods[0]['name']?></span>
+				<a href="<?=PATH?>">Главная</a> >> <a href="?view=cat&amp;category=<?=$bread[0]['brand_id']?>"><?=$bread[0]['brand_name']?></a> >> <a href="?view=cat&amp;category=<?=$bread[1]['brand_id']?>"><?=$bread[1]['brand_name']?></a> >> <span><?=$content[0]['name']?></span>
 				<?php elseif(count($bread) == 1): // Если не дочерняя категория ?>
-				<a href="<?=PATH?>">Главная</a> >> <a href="?view=cat&amp;category=<?=$bread[0]['brand_id']?>"><?=$bread[0]['brand_name']?></a> >> <span><?=$goods[0]['name']?></span>
+				<a href="<?=PATH?>">Главная</a> >> <a href="?view=cat&amp;category=<?=$bread[0]['brand_id']?>"><?=$bread[0]['brand_name']?></a> >> <span><?=$content[0]['name']?></span>
 				<?php endif; ?>
 			</div> <!-- .kroshka -->
 
 			<div class="detail_img">
-				<a href="<?=PRODUCT?><?=$goods[0]['img']?>" rel="group"><img src="<?=PRODUCT?><?=$goods[0]['img']?>" width="255" alt="<?=$goods[0]['name']?>" class="detail_img_large"></a>
-				<?php if(!empty($goods[0]['img_slide'])): // Если есть картинки галереи ?>
+				<a href="<?=PRODUCT?><?=$content[0]['img']?>" rel="group"><img src="<?=PRODUCT?><?=$content[0]['img']?>" width="255" alt="<?=$content[0]['name']?>" class="detail_img_large"></a>
+				<?php if(!empty($content[0]['img_slide'])): // Если есть картинки галереи ?>
 				<div class="detail_img_small">
-					<?php foreach($goods['img_slide'] as $item): ?>
-					<a rel="group" href="<?=PRODUCT?><?=$item?>"><img src="<?=PRODUCT?><?=$item?>" width="60" alt="<?=$goods[0]['name']?>"></a>
+					<?php foreach($content['img_slide'] as $item): ?>
+					<a rel="group" href="<?=PRODUCT?><?=$item?>"><img src="<?=PRODUCT?><?=$item?>" width="60" alt="<?=$content[0]['name']?>"></a>
 					<?php endforeach; ?>
 				</div> <!-- .detail_img_small -->
 				<?php endif; ?>
 			</div> <!-- .detail_img -->
-			<h2><?=$goods[0]['name']?></h2>
+			<h2><?=$content[0]['name']?></h2>
 			<table class="detail_info">
 				<tr>
 					<td>Двигатель:</td>
@@ -91,7 +90,7 @@ $bread = $this->bread()?>
 				</tr>
 			</table> <!-- .detail_info -->
 			<div class="detail_price">
-				<p class="price"><span class="id_<?=$goods[0]['goods_id']?>"><?=$goods[0]['price']?></span> руб.<a href="?view=addtocart&amp;goods_id=<?=$goods[0]['goods_id']?>" class="addtocart" id="<?=$goods[0]['goods_id']?>">Купить</a></p>
+				<p class="price"><span class="id_<?=$content[0]['goods_id']?>"><?=$content[0]['price']?></span> руб.<a href="?view=addtocart&amp;goods_id=<?=$content[0]['goods_id']?>" class="addtocart" id="<?=$content[0]['goods_id']?>">Купить</a></p>
 			</div>
 			<div id="add_desc">
 				<ul id="tabs">

@@ -85,7 +85,6 @@ header {
 	background: linear-gradient(to bottom, #49454e 0%,#342e38 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#49454e', endColorstr='#342e38',GradientType=0 );
 	float: right;
-	/*border: 1px solid #686868;*/
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -126,6 +125,7 @@ header {
 .top_menu li a img {
 	padding: 0 6px;
 }
+
 #main {
 	overflow: hidden;
 	min-height: 100%;
@@ -204,7 +204,7 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 .nav-left ul li {
 	margin: 5px 0 0 0;
 }
-.catalog {
+.categories {
 	display: none;
 }
 
@@ -307,6 +307,7 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 	margin: 0 0 15px;
 }
 .edit_data tr input {
+	background: #fff;
 	color: #333;
 	font: 14px Roboto, sans-serif;
 	padding: 4px 6px;
