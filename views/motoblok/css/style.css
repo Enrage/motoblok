@@ -182,7 +182,7 @@ header {
   border: 1px solid #666;
   display: none;
   left: 225px;
-  padding: 10px;
+  padding: 10px 15px 10px 10px;
   position: absolute;
   top: 60px;
   width: 200px;
@@ -193,8 +193,9 @@ header {
   font: 15px Roboto, sans-serif;
 }
 .authform input {
+  background: #fff;
   border: 1px solid #666;
-  margin: 5px 0 10px;
+  margin: 5px 0 10px 0;
 }
 #login, #pass {
   color: #333;
@@ -323,8 +324,9 @@ header {
   left: -83px;
 }
 #cat_top_menu li:nth-child(8) ul {
-  position: absolute;
-  left: -199px;
+  /*position: absolute;
+  left: -199px;*/
+  margin-left: -180px;
 }
 /* Выпадающее меню */
 #cat_top_menu li ul {
@@ -1032,6 +1034,7 @@ ul#tabs {
   width: 50px;
 }
 .z_kol input {
+  background: #fff;
   border-top: 1px solid #7f7f7f;
   border-left: 1px solid #7f7f7f;
   color: #616e84;
@@ -1140,7 +1143,9 @@ ul#tabs {
   text-align: center;
 }
 .zakaz-data td input {
+  background: #fff;
   border: 1px solid #aaa;
+  color: #333;
   padding: 4px 3px;
   margin: 0 10px;
   width: 300px;
@@ -1149,7 +1154,9 @@ ul#tabs {
   text-align: center;
 }
 .zakaz-data td textarea {
+  background: #fff;
   border: 1px solid #aaa;
+  color: #333;
   height: 60px;
   margin: 5px 0;
   padding: 4px 3px;
@@ -1370,6 +1377,7 @@ footer {
 	margin: 5px 0 5px 15px;
 }
 #newsletter {
+  background: #fff;
 	border: 1px solid #bbb;
 	border-radius: 3px;
 	margin: 5px 0 5px 15px;

@@ -36,7 +36,7 @@ class model {
 		return $cat;
 	}
 
-	// Массив категорий
+	// Массив категорий для мета-данных
 	public function meta_cat() {
 		$query = "SELECT brand_id, brand_name, keywords, description FROM brands";
 		$stmt = $this->mysqli->prepare($query);

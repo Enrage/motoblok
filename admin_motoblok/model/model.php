@@ -19,15 +19,20 @@ class model {
 			$row = array();
 			$i = 0;
 			while($stmt->fetch()) {
-				$row[] = array($brand_id, $brand_name, $parent_id, $keywords, $description);
-				if(!$row[$i][2]) {
-					$cat[$row[$i][0]][] = $row[$i][1];
-					$cat[$row[$i][0]][] = $row[$i][3];
-					$cat[$row[$i][0]][] = $row[$i][4];
+				$row[] = array(
+					'brand_id' => $brand_id,
+					'brand_name' => $brand_name,
+					'parent_id' => $parent_id,
+					'keywords' => $keywords,
+					'description' => $description);
+				if(!$row[$i]['parent_id']) {
+					$cat[$row[$i]['brand_id']][] = $row[$i]['brand_name'];
+					// $cat[$row[$i][0]][] = $row[$i][3];
+					// $cat[$row[$i][0]][] = $row[$i][4];
 				} else {
-					$cat[$row[$i][2]]['sub'][$brand_id][0] = $brand_name;
-					$cat[$row[$i][2]]['sub'][$brand_id][1] = $keywords;
-					$cat[$row[$i][2]]['sub'][$brand_id][2] = $description;
+					$cat[$row[$i]['parent_id']]['sub'][$brand_id] = $brand_name;
+					// $cat[$row[$i][2]]['sub'][$brand_id][1] = $keywords;
+					// $cat[$row[$i][2]]['sub'][$brand_id][2] = $description;
 					// $brand_name[0] = $keywords;
 				}
 				$i++;
@@ -41,74 +46,27 @@ class model {
 		return $cat;
 	}
 
-	// Страницы
-	public function edit_pages() {
-		$query = "SELECT page_id, title, position FROM pages ORDER BY position";
+	// Получение данных отдельной категории
+	public function get_brand($brand_id) {
+		$query = "SELECT * FROM brands WHERE brand_id = ?";
 		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('i', $brand_id);
 		$stmt->execute();
-		$stmt->bind_result($page_id, $title, $position);
-		$pages = array();
+		$stmt->bind_result($brand_id, $brand_name, $parent_id, $keywords, $description);
+		$brand = array();
 		while($stmt->fetch()) {
-			$pages[] = array(
-				'page_id' => $page_id,
-				'title' => $title,
-				'position' => $position);
-		}
-		$stmt->close();
-		return $pages;
-	}
-
-	// Отдельная страница
-	public function get_page($page_id) {
-		$query = "SELECT * FROM pages WHERE page_id = ?";
-		$stmt = $this->mysqli->prepare($query);
-		$stmt->bind_param('i', $page_id);
-		$stmt->execute();
-		$stmt->bind_result($page_id, $title, $keywords, $description, $position, $text);
-		$page = array();
-		while($stmt->fetch()) {
-			$page[] = array(
-				'page_id' => $page_id,
-				'title' => $title,
+			$brand[] = array(
+				'brand_id' => $brand_id,
+				'brand_name' => $brand_name,
+				'parent_id' => $parent_id,
 				'keywords' => $keywords,
-				'description' => $description,
-				'position' => $position,
-				'text' => $text);
+				'description' => $description);
 		}
 		$stmt->close();
-		return $page;
+		return $brand;
 	}
 
-	// Редактирование страницы
-	public function update_page($page_id) {
-		$title = trim($_POST['title']);
-		$position = (int)$_POST['position'];
-		$keywords = trim($_POST['keywords']);
-		$description = trim($_POST['description']);
-		$text = trim($_POST['text']);
-		if(empty($title)) {
-			$_SESSION['edit_page']['res'] = "<div class='error'>Должно быть название страницы</div>";
-			return false;
-		} else {
-			$title = $this->func->clr($title);
-			$keywords = $this->func->clr($keywords);
-			$description = $this->func->clr($description);
-			$text = $this->func->clr($text);
-			$query = "UPDATE pages SET title = ?, position = ?, keywords = ?, description = ?, text = ? WHERE page_id = ?";
-			$stmt = $this->mysqli->prepare($query);
-			$stmt->bind_param('sisssi', $title, $position, $keywords, $description, $text, $page_id);
-			$stmt->execute();
-			if($stmt->affected_rows > 0) {
-				$_SESSION['answer'] = "<div class='success'>Страница обновлена!</div>";
-				return true;
-			} else {
-				$_SESSION['edit_page']['res'] = "<div class='error'>Ошибка или Вы ничего не меняли</div>";
-				return false;
-			}
-			$stmt->close();
-		}
-	}
-
+	// Добавление категорий
 	public function add_brand() {
 		$brand_name = trim($_POST['brand_name']);
 		$parent_id = (int)$_POST['parent_id'];
@@ -137,7 +95,7 @@ class model {
 				$stmt->bind_param('si', $brand_name, $parent_id);
 				$stmt->execute();
 				if($stmt->affected_rows > 0) {
-					$_SESSION['add_brand']['res'] = "<div class='success'>Категория добавлена!</div>";
+					$_SESSION['answer'] = "<div class='success'>Категория добавлена!</div>";
 					return true;
 				} else {
 					$_SESSION['add_brand']['res'] = "<div class='error'>Ошибка при добавлении категории!</div>";
@@ -147,8 +105,159 @@ class model {
 					return false;
 				}
 			}
-			$stmt->close();
-			return $page;
 		}
+		$stmt->close();
+		return $page;
+	}
+
+	// Редактирование категорий
+	public function edit_brand($brand_id) {
+		$brand_name = trim($_POST['brand_name']);
+		$parent_id = (int)$_POST['parent_id'];
+		$keywords = trim($_POST['keywords']);
+		$description = trim($_POST['description']);
+		$this_brand = trim($_POST['this_brand']);
+		if(empty($brand_name)) {
+			$_SESSION['edit_brand']['res'] = "<div class='error'>Должно быть название категории!</div>";
+			$_SESSION['edit_brand']['keywords'] = $keywords;
+			$_SESSION['edit_brand']['description'] = $description;
+			return false;
+		} else {
+			$query = "SELECT brand_id FROM brands WHERE brand_name = ? AND parent_id = ?";
+			$stmt = $this->mysqli->prepare($query);
+			$stmt->bind_param('si', $brand_name, $parent_id);
+			$stmt->execute();
+			$stmt->store_result();
+			if($stmt->num_rows > 0 && $brand_name != $this_brand) {
+				$_SESSION['edit_brand']['res'] = "<div class='error'>Категория с таким названием уже есть!</div>";
+				$_SESSION['edit_brand']['brand_name'] = $brand_name;
+				$_SESSION['edit_brand']['keywords'] = $keywords;
+				$_SESSION['edit_brand']['description'] = $description;
+
+				return false;
+			} else {
+				$query = "UPDATE brands SET brand_name = ?, parent_id = ?, keywords = ?, description = ? WHERE brand_id = ?";
+				$stmt = $this->mysqli->prepare($query);
+				$stmt->bind_param('sissi', $brand_name, $parent_id, $keywords, $description, $brand_id);
+				$stmt->execute();
+				if($stmt->affected_rows > 0) {
+					$_SESSION['answer'] = "<div class='success'>Категория обновлена!</div>";
+					return true;
+				} else {
+					$_SESSION['edit_brand']['res'] = "<div class='error'>Ошибка редактирования категории или Вы ничего не меняли</div>";
+					$_SESSION['edit_brand']['brand_name'] = $brand_name;
+					$_SESSION['edit_brand']['keywords'] = $keywords;
+					$_SESSION['edit_brand']['description'] = $description;
+					return false;
+				}
+			}
+		}
+		$stmt->close();
+	}
+
+	public function del_brand($brand_id) {
+		$query = "SELECT COUNT(*) FROM brands WHERE parent_id = ?";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('i', $brand_id);
+		$stmt->execute();
+		$stmt->bind_result($count);
+		while($stmt->fetch()) {
+			$row[] = array(
+				'count' => $count);
+		}
+		if($row[0]['count'] > 0) {
+			$_SESSION['answer'] = "<div class='error'>Категория имеет подкатегории. Удалите сначала их или переместите в другие категории!</div>";
+		} else {
+			$query = "DELETE FROM goods WHERE goods_brandid = ?";
+			$stmt = $this->mysqli->prepare($query);
+			$stmt->bind_param('i', $brand_id);
+			$stmt->execute();
+			$query = "DELETE FROM brands WHERE brand_id = ?";
+			$stmt = $this->mysqli->prepare($query);
+			$stmt->bind_param('i', $brand_id);
+			$stmt->execute();
+			$_SESSION['answer'] = "<div class='success'>Категория удалена!</div>";
+		}
+		$stmt->close();
+	}
+
+	// Получение кол-ва товаров для навигации
+	public function count_rows($category) {
+		$query = "SELECT COUNT(goods_id) as count_rows FROM goods WHERE goods_brandid = ?
+		UNION
+		SELECT COUNT(goods_id) as count_rows FROM goods WHERE goods_brandid IN
+		(SELECT brand_id FROM brands WHERE parent_id = ?)";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('ii', $category, $category);
+		$stmt->execute();
+		$stmt->bind_result($count_rows);
+		$row = array();
+		while($stmt->fetch()) {
+			$row[] = array(
+				'count_rows' => $count_rows);
+		}
+		if(isset($row[1]['count_rows'])) {
+			$count_rows = $row[0]['count_rows'] + $row[1]['count_rows'];
+		} else $count_rows = $row[0]['count_rows'];
+		$stmt->close();
+		return $count_rows;
+	}
+
+	// Получение массива товаров в категории
+	public function products($category, $start_pos, $perpage) {
+		$query = "SELECT goods_id, name, img, anons, price, hits, news, sale, date FROM goods WHERE goods_brandid = ?
+		UNION
+		SELECT goods_id, name, img, anons, price, hits, news, sale, date FROM goods WHERE goods_brandid IN
+		(SELECT brand_id FROM brands WHERE parent_id = ?) LIMIT $start_pos, $perpage";
+		try {
+			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error Prepare products");
+			$stmt->bind_param('ii', $category, $category);
+			$stmt->execute();
+			$stmt->bind_result($goods_id, $name, $img, $anons, $price, $hits, $news, $sale, $date);
+			$products = array();
+			while($stmt->fetch()) {
+				$products[] = array(
+					'goods_id' => $goods_id,
+					'name' => $name,
+					'img' => $img,
+					'anons' => $anons,
+					'price' => $price,
+					'hits' => $hits,
+					'news' => $news,
+					'sale' => $sale,
+					'date' => $date);
+			}
+			$stmt->close();
+		}
+		catch(Exception $e) {
+			print 'Ошибка: '. $e->getMessage();
+			die();
+		}
+		return $products;
+	}
+
+	// Получение названий для хлебных крошек
+	public function brand_name($category) {
+		$query = "SELECT brand_id, brand_name FROM brands WHERE brand_id = (SELECT parent_id FROM brands WHERE brand_id = ?)
+		UNION
+		SELECT brand_id, brand_name FROM brands WHERE brand_id = ?";
+		try {
+			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error Prepare products");
+			$stmt->bind_param('ii', $category, $category);
+			$stmt->execute();
+			$stmt->bind_result($brand_id, $brand_name);
+			$brandname = array();
+			while($stmt->fetch()) {
+				$brandname[] = array(
+					'brand_id' => $brand_id,
+					'brand_name' => $brand_name);
+			}
+			$stmt->close();
+		}
+		catch(Exception $e) {
+			print 'Ошибка: '. $e->getMessage();
+			die();
+		}
+		return $brandname;
 	}
 }

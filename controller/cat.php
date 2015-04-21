@@ -2,10 +2,10 @@
 defined('SHOP') or die('Access Denied');
 class cat extends Core {
 	public function get_content() {
-		$pos = $this->pos();
-		$sort = $this->sort();
 		if(isset($_GET['category'])) {
 			$category = abs((int)$_GET['category']);
+			$pos = $this->pos();
+			$sort = $this->sort();
 			$perpage = PERPAGE;
 			$res = $this->m->products($category, $sort['order_db'], $pos['start_pos'], $perpage);
 		} else $res = "<div class='error'>Нет такой категории!</div>";

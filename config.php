@@ -26,6 +26,8 @@ define('TITLE', 'Интернет-магазин Всемотоблоки');
 define('ADMIN_EMAIL', 'remover88@mail.ru');
 // Кол-во товаров на странице
 define('PERPAGE', 6);
+// Кол-во товаров на странице в админке
+define('ADM_PERPAGE', 12);
 // Папка шаблонов административной части
 define('ADMIN_TPL', 'views/');
 // Домашняя папка

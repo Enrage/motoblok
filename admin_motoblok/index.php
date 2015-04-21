@@ -11,7 +11,7 @@ function __autoload($c) {
 }
 if(isset($_GET['view'])) {
 	$class = trim(strip_tags($_GET['view']));
-} else $class = 'edit_pages';
+} else $class = 'brands';
 if(class_exists($class)) {
 	$obj = new $class;
 	$obj->get_body($class);

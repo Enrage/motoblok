@@ -13,11 +13,11 @@ $cat = $this->m->catalog()?>
 				<ul class="categories">
 				<?php foreach($cat as $key => $item): // Если это родительская категория ?>
 					<?php if(count($item) > 1): ?>
-					<li class="header_li"><a href="#">> &nbsp;<?=$item[0]?></a></li>
+					<li class="header_li"><a href="#"> &nbsp;<?=$item[0]?></a></li>
 					<ul class="podcategories">
-						<li><a href="?view=cat&amp;category=<?=$key?>">- Все модели</a></li>
+						<li><a href="?view=cat&amp;category=<?=$key?>"> Все модели</a></li>
 						<?php foreach($item['sub'] as $key => $sub): ?>
-						<li><a href="?view=cat&amp;category=<?=$key?>">- <?=$sub?></a></li>
+						<li><a href="?view=cat&amp;category=<?=$key?>"> <?=$sub?></a></li>
 						<?php endforeach; ?>
 					</ul>
 					<?php elseif($item[0]): // Если самостоятельная категория ?>
