@@ -1,7 +1,6 @@
 <?php defined('SHOP') or die('Access Denied');
 $pos = $this->pos();
-$bread = $this->bread_crumbs();
-//$this->f->print_arr($content);?>
+$bread = $this->bread_crumbs()?>
 <div id="content">
 	<div id="container">
 		<div class="kroshka">
@@ -13,7 +12,14 @@ $bread = $this->bread_crumbs();
 		</div> <!-- .kroshka -->
 
 		<h3>Список товаров</h3>
-		<p class="add"><a href="?view=add_product">Добавить товар</a></p>
+		<?php if(isset($_SESSION['answer'])) {
+			echo $_SESSION['answer'];
+			unset($_SESSION['answer']); } ?>
+		<?php if(count($bread) > 1): ?>
+		<p class="add"><a href="?view=add_product&amp;brand_id=<?=$bread[1]['brand_id']?>">Добавить товар</a></p>
+		<?php else: ?>
+		<p class="add"><a href="?view=add_product&amp;brand_id=<?=$bread[0]['brand_id']?>">Добавить товар</a></p>
+		<?php endif; ?>
 		<?php
 		if(isset($_SESSION['answer'])) {
 			print $_SESSION['answer'];
@@ -32,7 +38,7 @@ $bread = $this->bread_crumbs();
 				<td>
 					<?php if(isset($content[$start])): // Если есть товар ?>
 					<h4><a href="?view=edit_product&amp;goods_id=<?=$content[$start]['goods_id']?>"><?=$content[$start]['name']?></a></h4>
-					<p><img src="<?=PRODUCT?><?=$content[$start]['img']?>" alt="<?=$content[$start]['name']?>" width="150"></p>
+					<p><img src="<?=PRODUCT.$content[$start]['img']?>" alt="<?=$content[$start]['name']?>" height="140"></p>
 					<div><a href="?view=edit_product&amp;goods_id=<?=$content[$start]['goods_id']?>" class="edit">Изменить</a> | <a href="?del_product&amp;goods_id=<?=$content[$start]['goods_id']?>" class="del">Удалить</a></div>
 					<?php else: // Если нет товара ?>
 					&nbsp;
@@ -42,16 +48,6 @@ $bread = $this->bread_crumbs();
 			<?php endfor; ?>
 			</tr>
 		<?php endfor; ?>
-				<!-- <td>
-					<h2>Tovar 1</h2>
-					<img src="<?=PRODUCT?>img/motoblok1.jpg" alt="">
-					<p><a href="#" class="edit">Изменить</a> | <a href="#" class="del">Удалить</a></p>
-				</td>
-				<td>
-					<h2>Tovar 1</h2>
-					<img src="<?=PRODUCT?>img/motoblok1.jpg" alt="">
-					<p><a href="#" class="edit">Изменить</a> | <a href="#" class="del">Удалить</a></p>
-				</td> -->
 		</table>
 		<?php else: // Если нет товаров ?>
 		<?php endif; ?>

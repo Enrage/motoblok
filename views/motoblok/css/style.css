@@ -814,6 +814,9 @@ a.shop_now:hover {
   left: 10px;
   text-decoration: underline;
 }
+.product_line article h2 + p {
+  margin: 5px 10px 0 103px;
+}
 .product_line article .description {
 	color: #333;
 	font: 12px Roboto, sans-serif;
@@ -822,17 +825,26 @@ a.shop_now:hover {
 	position: relative;
 	top: 8px;
 }
-.product_line article .product_img {
+.product_line article .product_img_line {
 	border: 1px dotted #c9c9c9;
   float: left;
-  height: 110px;
+  width: 90px;
+}
+.product_img_line img {
+  min-width: 90px;
+  max-height: 125px
 }
 .product_line article .product_img img {
-  padding: 10px;
+  margin: 10px;
+}
+.product_img img {
+  margin: 10px;
+  max-width: 150px;
+  max-height: 135px;
 }
 .product_line article .price {
   bottom: 36px;
-  left: 456px;
+  left: 442px;
 }
 .product_line article .addtocart {
   bottom: 10px;

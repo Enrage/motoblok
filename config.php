@@ -11,7 +11,11 @@ define('VIEW', 'views/');
 // Активный шаблон
 define('TEMPLATE', 'views/motoblok/');
 // Папка с картинками контента
-define('PRODUCT', PATH.'userfiles/');
+define('PRODUCT', PATH.'userfiles/product_img/baseimg/');
+// Папка с временными файлами
+define('PRODUCT_TMP', PATH.'userfiles/product_img/tmp/');
+// Максимально допустимый вес загружаемых картинок - 3 мб
+define('SIZE', '3145728');
 // Сервер БД
 define('HOST', 'localhost');
 // Пользователь

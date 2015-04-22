@@ -37,11 +37,11 @@ $bread = $this->bread_crumbs()?>
 			<section class="product_grid">
 				<article>
 					<h2><a href="?view=product&amp;goods_id=<?=$product['goods_id']?>"><?=$product['name']?></a></h2>
-					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$product['img']?>" width="140" alt="<?=$product['name']?>"></a>
+					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$product['img']?>" alt="<?=$product['name']?>"></a>
 					<p class="price"><span class="id_<?=$product['goods_id']?>"><?=$product['price']?></span> руб.</p>
 					<div class="img_new"> <!-- Иконка новинка -->
 						<?php if($product['news']) { ?>
-						<img src="<?=TEMPLATE?>img/new.png" alt="новинка" width="60">
+						<img src="<?=TEMPLATE?>img/new.png" alt="новинка" width="50">
 						<?php } ?>
 					</div>
 					<a class="addtocart" id="<?=$product['goods_id']?>" href="?view=addtocart&amp;goods_id=<?=$product['goods_id']?>">В корзину</a>
@@ -50,13 +50,13 @@ $bread = $this->bread_crumbs()?>
 			<?php else: // Если линейный вид ?>
 			<section class="product_line">
 				<article>
-					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img"><img src="<?=PRODUCT?><?=$product['img']?>" width="93" alt="<?=$product['name']?>"></a>
+					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="product_img_line"><img src="<?=PRODUCT?><?=$product['img']?>" width="80" alt="<?=$product['name']?>"></a>
 					<h2><a href="?view=product&amp;goods_id=<?=$product['goods_id']?>"><?=$product['name']?></a></h2>
-					<p class="description"><?=$product['anons']?></p>
+					<div class="description"><?=$product['anons']?></div>
 					<p class="price"><span class="id_<?=$product['goods_id']?>"><?=$product['price']?></span> руб.</p>
 					<div> <!-- Иконки -->
 						<?php if($product['news']) { ?>
-						<img src="<?=TEMPLATE?>img/new.png" alt="новинка" width="60">
+						<img src="<?=TEMPLATE?>img/new.png" alt="новинка" width="40">
 						<?php } ?>
 					</div>
 					<a href="?view=product&amp;goods_id=<?=$product['goods_id']?>" class="more">Подробнее</a>

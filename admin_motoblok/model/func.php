@@ -45,4 +45,54 @@ class func {
 		// Формируем вывод навигации
 		print $startpage.$back.$page2left.$page1left.'<span class="nav_active">'.$page.'</span>'.$page1right.$page2right.$forward.$endpage;
 	}
+
+	// Ресайз картинок
+	public function resize($target, $dest, $wmax, $hmax, $ext) {
+    /*
+    $target - путь к оригинальному файлу
+    $dest - путь сохранения обработанного файла
+    $wmax - максимальная ширина
+    $hmax - максимальная высота
+    $ext - расширение файла */
+    list($w_orig, $h_orig) = getimagesize($target);
+    $ratio = $w_orig / $h_orig; // =1 - квадрат, <1 - альбомная, >1 - книжная
+    if(($wmax / $hmax) > $ratio) {
+      $wmax = $hmax * $ratio;
+    } else {
+      $hmax = $wmax / $ratio;
+    }
+
+    $img = "";
+    // imagecreatefromjpeg | imagecreatefromgif | imagecreatefrompng
+    switch($ext) {
+      case("gif"):
+        $img = imagecreatefromgif($target);
+      break;
+      case("png"):
+        $img = imagecreatefrompng($target);
+      break;
+      default:
+        $img = imagecreatefromjpeg($target);
+    }
+    $newImg = imagecreatetruecolor($wmax, $hmax); // создаем оболочку для новой картинки
+
+    if($ext == "png") {
+      imagesavealpha($newImg, true); // сохранение альфа канала
+      $transPng = imagecolorallocatealpha($newImg, 0, 0, 0, 127); // добавляем прозрачность
+      imagefill($newImg, 0, 0, $transPng); // заливка
+    }
+
+    imagecopyresampled($newImg, $img, 0, 0, 0, 0, $wmax, $hmax, $w_orig, $h_orig); // копируем и ресайзим изображение
+    switch($ext) {
+      case("gif"):
+        imagegif($newImg, $dest);
+      break;
+      case("png"):
+        imagepng($newImg, $dest);
+      break;
+      default:
+        imagejpeg($newImg, $dest);
+    }
+	  imagedestroy($newImg);
+	}
 }

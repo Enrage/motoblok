@@ -107,7 +107,6 @@ class model {
 			}
 		}
 		$stmt->close();
-		return $page;
 	}
 
 	// Редактирование категорий
@@ -259,5 +258,81 @@ class model {
 			die();
 		}
 		return $brandname;
+	}
+
+	// Добавление товара
+	public function add_product() {
+		$name = trim($_POST['name']);
+		$goods_brandid = (int)$_POST['category'];
+		$keywords = trim($_POST['keywords']);
+		$description = trim($_POST['description']);
+		$anons = trim($_POST['anons']);
+		$content = trim($_POST['content']);
+		$visible = (int)$_POST['visible'];
+		$hits = isset($_POST['hits']) ? (int)$_POST['hits']: '0';
+		$news = isset($_POST['news']) ? (int)$_POST['news']: '0';
+		$sale = isset($_POST['sale']) ? (int)$_POST['sale']: '0';
+		$price = round(floatval(preg_replace('#,#', '.', $_POST['price'])), 2);
+		$date = date("Y-m-d");
+
+		if(empty($name)) {
+			$_SESSION['add_product']['res'] = "<div class='error'>У товара должно быть название!</div>";
+			$_SESSION['add_product']['price'] = $price;
+			$_SESSION['add_product']['keywords'] = $keywords;
+			$_SESSION['add_product']['description'] = $description;
+			$_SESSION['add_product']['anons'] = $anons;
+			$_SESSION['add_product']['content'] = $content;
+			return false;
+		} else {
+			$query = "INSERT INTO goods (name, keywords, description, goods_brandid, anons, content, visible, hits, news, sale, price, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			if(!$stmt = $this->mysqli->prepare($query)) die('ошибка');
+			$stmt->bind_param('sssissssssss', $name, $keywords, $description, $goods_brandid, $anons, $content, $visible, $hits, $news, $sale, $price, $date);
+			$stmt->execute();
+			if($stmt->affected_rows > 0) {
+				$id = $stmt->insert_id; // ID сохраненного товара
+				$types = array('image/gif', "image/png", 'image/jpeg', 'image/pjpeg', 'image/x-png');
+
+				if(isset($_FILES['baseimg']['name'])) {
+					$baseimgExt = strtolower(preg_replace('#.+\.([a-z]+)$#i', '$1', $_FILES['baseimg']['name'])); // Расширение картинки
+					$baseimgName = "{$id}.{$baseimgExt}"; // Новое имя картинки
+					$baseimgTmpName = $_FILES['baseimg']['tmp_name']; // Временное имя файла
+					$baseimgSize = $_FILES['baseimg']['size']; // Вес файла
+					$baseimgType = $_FILES['baseimg']['type']; // Тип файла
+					$baseimgError = $_FILES['baseimg']['error']; // 0 - ok, иначе - ошибка
+					$error = '';
+
+					if(!in_array($baseimgType, $types)) $error .= 'Допустимые расширения - .gif, .png, .jpg <br>';
+					if($baseimgSize > SIZE) $error .= 'Максимальный размер файла - 3 Мб!';
+					if($baseimgError) $error .= 'Ошибка при загрузке файла! Возможно файл слишком большой';
+					if(!empty($error)) $_SESSION['answer'] = "<div class='error'>Ошибка при загрузке картинки товара! <br> {$error}</div>";
+
+					// Если нет ошибок
+					if(empty($error)) {
+						if(@move_uploaded_file($baseimgTmpName, "{PRODUCT_TMP}.{$baseimgName}")) {
+							$this->func->resize("{PRODUCT_TMP}.{$baseimgName}", "../userfiles/product_img/baseimg/$baseimgName", 980, 630, $baseimgExt);
+							@unlink("{PRODUCT_TMP}.{$baseimgName}");
+							$query = "UPDATE goods SET img = ? WHERE goods_id = ?";
+							$stmt = $this->mysqli->prepare($query);
+							$stmt->bind_param('si', $baseimgName, $id);
+							$stmt->execute();
+						} else {
+							$_SESSION['answer'] .= "<div class='error'>Не удалось переместить загруженную картинку. Проверьте права на папки в каталоге ".PRODUCT_TMP."!</div>";
+						}
+					}
+				}
+
+				$_SESSION['answer'] .= "<div class='success'>Товар успешно добавлен!</div>";
+				return true;
+			} else {
+				$_SESSION['add_product']['res'] = "<div class='error'>Ошибка при добавлении товара!</div>";
+				$_SESSION['add_product']['name'] = $name;
+				$_SESSION['add_product']['price'] = $price;
+				$_SESSION['add_product']['keywords'] = $keywords;
+				$_SESSION['add_product']['description'] = $description;
+				$_SESSION['add_product']['anons'] = $anons;
+				$_SESSION['add_product']['content'] = $content;
+				return false;
+			}
+		}
 	}
 }

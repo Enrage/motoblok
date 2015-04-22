@@ -326,7 +326,7 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 	font: 21px Roboto, sans-serif;
 	margin: 0 0 15px;
 }
-.edit_data tr input {
+.edit_data tr input[type=text] {
 	background: #fff;
 	color: #333;
 	font: 14px Roboto, sans-serif;
@@ -422,6 +422,28 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 	margin: 0 10px 15px;
 }
 
+/* add_product */
+input[name=price] {
+	width: 80px !important;
+}
+
+.select_inf {
+	background: #fff;
+	border: 1px solid #999;
+	color: #333;
+}
+.select_inf option {
+	background: #fff;
+	color: #333;
+	font: 13px Roboto, sans-serif;
+	padding: 5px 0;
+}
+.eyestoper_check {
+	width: 20px;
+}
+#news, #hits, #sale {
+	width: 50px;
+}
 
 /* Breadcrumbs */
 .kroshka {
