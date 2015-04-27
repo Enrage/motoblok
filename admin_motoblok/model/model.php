@@ -308,9 +308,9 @@ class model {
 
 					// Если нет ошибок
 					if(empty($error)) {
-						if(@move_uploaded_file($baseimgTmpName, "{PRODUCT_TMP}.{$baseimgName}")) {
-							$this->func->resize("{PRODUCT_TMP}.{$baseimgName}", "../userfiles/product_img/baseimg/$baseimgName", 980, 630, $baseimgExt);
-							@unlink("{PRODUCT_TMP}.{$baseimgName}");
+						if(@move_uploaded_file($baseimgTmpName, "../userfiles/product_img/tmp/$baseimgName")) {
+							$this->func->resize("../userfiles/product_img/tmp/$baseimgName", "../userfiles/product_img/baseimg/$baseimgName", 980, 630, $baseimgExt);
+							@unlink("".PRODUCT_TMP.$baseimgName."");
 							$query = "UPDATE goods SET img = ? WHERE goods_id = ?";
 							$stmt = $this->mysqli->prepare($query);
 							$stmt->bind_param('si', $baseimgName, $id);
@@ -318,6 +318,53 @@ class model {
 						} else {
 							$_SESSION['answer'] .= "<div class='error'>Не удалось переместить загруженную картинку. Проверьте права на папки в каталоге ".PRODUCT_TMP."!</div>";
 						}
+					}
+				}
+
+				if(isset($_FILES['galleryimg']['name'][0])) {
+					for($i = 0; $i < count($_FILES['galleryimg']['name']); $i++) {
+						$error = '';
+						if($_FILES['galleryimg']['name'][$i]) {
+							$galleryimgExt = strtolower(preg_replace('#.+\.([a-z]+)$#i', '$1', $_FILES['galleryimg']['name'][$i])); // Расширение картинки
+							$galleryimgName = "{$id}_{$i}.{$galleryimgExt}"; // Новое имя картинки
+							$galleryimgTmpName = $_FILES['galleryimg']['tmp_name'][$i]; // Временное имя файла
+							$galleryimgSize = $_FILES['galleryimg']['size'][$i]; // Вес файла
+							$galleryimgType = $_FILES['galleryimg']['type'][$i]; // Тип файла
+							$galleryimgError = $_FILES['galleryimg']['error'][$i]; // 0 - ok, иначе - ошибка
+							if(!in_array($galleryimgType, $types)) {
+								$error .= 'Допустимые расширения - .gif, .png, .jpg <br>';
+								$_SESSION['answer'] .= "<div class='error'>Ошибка при загрузке картинки {$_FILES['galleryimg']['name'][$i]} <br> {$error}</div>";
+								continue;
+							}
+							if($galleryimgSize > SIZE) {
+								$error .= 'Максимальный размер файла - 3 Мб.';
+								$_SESSION['answer'] .= "<div class='error'>Ошибка при загрузке картинки {$_FILES['galleryimg']['name'][$i]} <br> {$error}</div>";
+								continue;
+							}
+							if($galleryimgError) {
+								$error .= 'Ошибка при загрузке файла! Возможно файл слишком большой';
+								$_SESSION['answer'] .= "<div class='error'>Ошибка при загрузке картинки {$_FILES['galleryimg']['name'][$i]} <br> {$error}</div>";
+								continue;
+							}
+							if(empty($error)) {
+								if(@move_uploaded_file($galleryimgTmpName, "../userfiles/product_img/photos/$galleryimgName")) {
+									$this->func->resize("../userfiles/product_img/photos/$galleryimgName", "../userfiles/product_img/thumbs/$galleryimgName", 980, 630, $galleryimgExt);
+									if(!isset($galleryfiles)) {
+										$galleryfiles = $galleryimgName;
+									} else {
+										$galleryfiles .= "|{$galleryimgName}";
+									}
+								} else {
+									$_SESSION['answer'] .= "<div class='error'>Не удалось переместить загруженную картинку. Проверьте права на папки в каталоге ".PRODUCT_PHOTOS."!</div>";
+								}
+							}
+						}
+					}
+					if(isset($galleryfiles)) {
+						$query = "UPDATE goods SET img_slide = ? WHERE goods_id = ?";
+						$stmt = $this->mysqli->prepare($query);
+						$stmt->bind_param('si', $galleryfiles, $id);
+						$stmt->execute();
 					}
 				}
 

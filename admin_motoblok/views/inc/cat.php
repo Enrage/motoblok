@@ -38,8 +38,9 @@ $bread = $this->bread_crumbs()?>
 				<td>
 					<?php if(isset($content[$start])): // Если есть товар ?>
 					<h4><a href="?view=edit_product&amp;goods_id=<?=$content[$start]['goods_id']?>"><?=$content[$start]['name']?></a></h4>
-					<p><img src="<?=PRODUCT.$content[$start]['img']?>" alt="<?=$content[$start]['name']?>" height="140"></p>
-					<div><a href="?view=edit_product&amp;goods_id=<?=$content[$start]['goods_id']?>" class="edit">Изменить</a> | <a href="?del_product&amp;goods_id=<?=$content[$start]['goods_id']?>" class="del">Удалить</a></div>
+					<p><a href="?view=edit_product&amp;goods_id=<?=$content[$start]['goods_id']?>"><img src="<?=PRODUCT.$content[$start]['img']?>" alt="<?=$content[$start]['name']?>" height="140"></a></p>
+					<p class="cat_price">цена: <span><?=$content[$start]['price']?></span> руб.</p>
+					<div><a href="?del_product&amp;goods_id=<?=$content[$start]['goods_id']?>" class="del"><img src="<?=ADMIN_TPL?>img/delete.jpg" alt="Удалить товар" width="15">Удалить</a></div>
 					<?php else: // Если нет товара ?>
 					&nbsp;
 				</td>

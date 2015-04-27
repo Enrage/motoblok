@@ -396,6 +396,9 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 .edit_product h4 + p {
 	height: 150px;
 }
+.edit_product h4 + p a img {
+	border: 1px solid #ccc;
+}
 .edit_product td {
 	background: #fff;
 	height: 34px;
@@ -411,15 +414,25 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 }
 .edit_product a.del {
 	color: red;
-	font: 10px Roboto, sans-serif;
-	margin: 0 0 0 20px;
+	display: block;
+	font: 11px Roboto, sans-serif;
+	margin: 0 0 10px;
+	float: right;
 	text-decoration: none;
 }
 .edit_product a.edit:hover, .edit_product a.del:hover {
 	text-decoration: underline;
 }
+a.del img {
+	position: relative;
+	top: 2px;
+	margin: 0 4px 0 0;
+}
 .edit_product div {
-	margin: 0 10px 15px;
+	margin: 10px 10px 15px;
+}
+.cat_price span {
+	color: #c5003d;
 }
 
 /* add_product */

@@ -21,7 +21,7 @@ $session_order = $this->session_order()?>
 						<?php foreach($_SESSION['cart'] as $key => $item): ?>
 						<tr>
 							<td class="z_name"><a href="?view=product&amp;goods_id=<?=$key?>"><?=$item['name']?></a></td>
-							<td class="z_img"><a href="?view=product&amp;goods_id=<?=$key?>"><img src="<?=PRODUCT?><?=$item['img']?>" width="120" alt="<?=$item['name']?>"></a></td>
+							<td class="z_img"><a href="?view=product&amp;goods_id=<?=$key?>"><img src="<?=PRODUCT?><?=$item['img']?>" height="120" alt="<?=$item['name']?>"></a></td>
 							<td class="z_price"><span><?=$item['price']?></span> руб</td>
 							<td class="z_kol"><input type="text" name="" value="<?=$item['qty']?>" id="id-<?=$key?>" class="kolvo"></td>
 							<td class="z_del"><a href="?view=cart&amp;delete=<?=$key?>"><img src="<?=TEMPLATE?>img/del_from_cart.png" width="15" alt="Удалить из корзины"></a></td>

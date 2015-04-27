@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	$("a[rel=group]").fancybox({
-    'transitionIn' : 'none',
-    'transitionOut' : 'none',
+    'transitionIn' : 'elastic',
+    'transitionOut' : 'elastic',
+    'speedIn' : 900,
+    'speedOut' : 900,
     'titlePosition' : 'over',
     'titleFormat' : function(title, currentArray, currentIndex, currentOpts) {
     	return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';

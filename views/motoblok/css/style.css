@@ -1201,6 +1201,12 @@ ul#tabs {
   margin: 10px;
 }
 
+/* Новости */
+.news_date {
+  color: #999;
+  font: 13px Roboto, sans-serif;
+  margin: 5px 0 15px;
+}
 
 /* Rightbar */
 #rightbar {
@@ -1410,10 +1416,39 @@ footer {
   margin: 0 10px;
   padding: 10px;
 }
+.informer h2 {
+  color: #C5003D;
+  font: 20px Roboto, sans-serif;
+}
 .informer h3 {
   color: #C5003D;
   font: 17px Roboto, sans-serif;
   margin: 0 0 10px;
+}
+.informer h3 a {
+  color: #72a700;
+  display: block;
+  font: 17px Roboto, sans-serif;
+  margin: 20px 0 0;
+  text-decoration: none;
+}
+.informer h3 a:hover {
+  text-decoration: underline;
+}
+.podrobnee a {
+  color: #72a700;
+  display: block;
+  font: 12px Roboto, sans-serif;
+  margin: 15px 0 20px;
+  text-align: right;
+}
+.podrobnee a:hover {
+  text-decoration: none;
+}
+.hr {
+  background: #777;
+  height: 1px;
+  width: 530px;
 }
 
 /* Нижнее меню */

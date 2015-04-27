@@ -1,4 +1,5 @@
-<?php defined('SHOP') or die('Access Denied')?>
+<?php defined('SHOP') or die('Access Denied');
+$news_page = $this->m->get_title_news();?>
 <!-- Rightbar -->
 <aside id="rightbar">
 	<div class="user_login">
@@ -31,12 +32,14 @@
 	<!-- News -->
 	<div class="news">
 		<h3>Новости</h3>
-		<p><span>27.03.2015</span><br>
-		<a href="#">Распродажа мотоблоков</a></p>
-		<p><span>30.03.2015</span><br>
-		<a href="#">В продаже появились новые газонокосилки</a></p>
-		<p><span>02.04.2015</span><br>
-		<a href="#">У нас появилась группа вконтакте</a></p>
-		<a href="#" class="archive_news">Архив новостей</a>
+		<?php if(!empty($news_page)): ?>
+			<?php foreach($news_page as $item): ?>
+			<p><span><?=$item['date']?></span><br>
+			<a href="?view=news_page&amp;news_id=<?=$item['news_id']?>"><?=$item['title']?></a></p>
+			<?php endforeach; ?>
+			<a href="?view=archive_news" class="archive_news">Архив новостей</a>
+		<?php else: ?>
+			<p>Новостей пока нет.</p>
+		<?php endif; ?>
 	</div> <!-- .news -->
 </aside> <!-- #rightbar -->

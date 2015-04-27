@@ -600,5 +600,58 @@ class model {
 		}
 		return $result_search;
 	}
+
+	// Названия новостей
+	public function get_title_news() {
+		$query = "SELECT news_id, title, date FROM news ORDER BY news_id DESC LIMIT 3";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($news_id, $title, $date);
+		$news = array();
+		while($stmt->fetch()) {
+			$news[] = array(
+				'news_id' => $news_id,
+				'title' => $title,
+				'date' => $date);
+		}
+		$stmt->close();
+		return $news;
+	}
+
+	// Отдельная новость
+	public function get_news_text($news_id) {
+		$query = "SELECT title, text, date FROM news WHERE news_id = ?";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('i', $news_id);
+		$stmt->execute();
+		$stmt->bind_result($title, $text, $date);
+		$news_text = array();
+		while($stmt->fetch()) {
+			$news_text[] = array(
+				'title' => $title,
+				'text' => $text,
+				'date' => $date);
+		}
+		$stmt->close();
+		return $news_text;
+	}
+
+	// Архив новостей
+	public function get_all_news() {
+		$query = "SELECT news_id, title, anons, date FROM news ORDER BY news_id DESC";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($news_id, $title, $anons, $date);
+		$all_news = array();
+		while($stmt->fetch()) {
+			$all_news[] = array(
+				'news_id' => $news_id,
+				'title' => $title,
+				'anons' => $anons,
+				'date' => $date);
+		}
+		$stmt->close();
+		return $all_news;
+	}
 }
 ?>

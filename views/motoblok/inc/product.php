@@ -13,11 +13,11 @@ $bread = $this->bread()?>
 			</div> <!-- .kroshka -->
 
 			<div class="detail_img">
-				<a href="<?=PRODUCT?><?=$content[0]['img']?>" rel="group"><img src="<?=PRODUCT?><?=$content[0]['img']?>" width="255" alt="<?=$content[0]['name']?>" class="detail_img_large"></a>
+				<a href="<?=PRODUCT.$content[0]['img']?>" rel="group"><img src="<?=PRODUCT.$content[0]['img']?>" width="255" alt="<?=$content[0]['name']?>" class="detail_img_large"></a>
 				<?php if(!empty($content[0]['img_slide'])): // Если есть картинки галереи ?>
 				<div class="detail_img_small">
 					<?php foreach($content['img_slide'] as $item): ?>
-					<a rel="group" href="<?=PRODUCT?><?=$item?>"><img src="<?=PRODUCT?><?=$item?>" width="60" alt="<?=$content[0]['name']?>"></a>
+					<a rel="group" title="<?=$content[0]['name']?>" href="<?=PRODUCT_PHOTOS.$item?>"><img src="<?=PRODUCT_THUMBS.$item?>" width="60" alt="<?=$content[0]['name']?>"></a>
 					<?php endforeach; ?>
 				</div> <!-- .detail_img_small -->
 				<?php endif; ?>
