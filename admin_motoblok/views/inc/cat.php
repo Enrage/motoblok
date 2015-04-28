@@ -51,6 +51,7 @@ $bread = $this->bread_crumbs()?>
 		<?php endfor; ?>
 		</table>
 		<?php else: // Если нет товаров ?>
+			Здесь товаров нет!
 		<?php endif; ?>
 		<div class="clr"></div>
 		<div class="pagination">

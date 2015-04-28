@@ -10,6 +10,7 @@
   <script type="text/javascript" src="<?=ADMIN_TPL?>js/scripts.js"></script>
   <script type="text/javascript" src="<?=ADMIN_TPL?>js/ckeditor/ckeditor.js"></script>
   <script type="text/javascript" src="<?=ADMIN_TPL?>js/ckeditor/adapters/jquery.js"></script>
+  <script type="text/javascript" src="<?=ADMIN_TPL?>js/ajaxupload.js"></script>
 </head>
 <body>
 <div id="wrapper">

@@ -36,6 +36,8 @@ define('ADMIN_EMAIL', 'remover88@mail.ru');
 define('PERPAGE', 6);
 // Кол-во товаров на странице в админке
 define('ADM_PERPAGE', 12);
+// Кол-во новостей на странице в архиве
+define('PERPAGE_NEWS', 2);
 // Папка шаблонов административной части
 define('ADMIN_TPL', 'views/');
 // Домашняя папка

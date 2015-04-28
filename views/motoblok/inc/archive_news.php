@@ -1,4 +1,5 @@
-<?php defined('SHOP') or die('Access Denied')?>
+<?php defined('SHOP') or die('Access Denied');
+$pos = $this->pos()?>
 <div id="content_informer">
 	<div id="container">
 		<section class="informer">
@@ -13,6 +14,9 @@
 			<div class="hr"></div>
 			<?php $i++; ?>
 			<?php endforeach; ?>
+			<div class="pagination">
+			<?php if($pos['pages_count'] > 1) $this->f->pagination($pos['page'], $pos['pages_count']); ?>
+			</div>
 		<?php else: ?>
 			<p>Новостей пока нет!</p>
 		<?php endif; ?>

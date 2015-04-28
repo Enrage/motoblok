@@ -382,4 +382,34 @@ class model {
 			}
 		}
 	}
+
+	// Получение данных товара
+	public function get_product($goods_id) {
+		$query = "SELECT * FROM goods WHERE goods_id = ?";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('i', $goods_id);
+		$stmt->execute();
+		$stmt->bind_result($goods_id, $name, $keywords, $description, $img, $goods_brandid, $anons, $content, $visible, $hits, $news, $sale, $price, $date, $img_slide);
+		$brand = array();
+		while($stmt->fetch()) {
+			$brand[] = array(
+				'goods_id' => $goods_id,
+				'name' => $name,
+				'keywords' => $keywords,
+				'description' => $description,
+				'img' => $img,
+				'goods_brandid' => $goods_brandid,
+				'anons' => $anons,
+				'content' => $content,
+				'visible' => $visible,
+				'hits' => $hits,
+				'news' => $news,
+				'sale' => $sale,
+				'price' => $price,
+				'date' => $date,
+				'img_slide' => $img_slide);
+		}
+		$stmt->close();
+		return $brand;
+	}
 }

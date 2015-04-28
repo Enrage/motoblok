@@ -457,6 +457,44 @@ input[name=price] {
 #news, #hits, #sale {
 	width: 50px;
 }
+#add, #del {
+	background: #ddd;
+	border: 1px solid #999;
+	border-radius: 5px;
+	color: #333;
+	cursor: pointer;
+	font: 14px Roboto, sans-serif;
+	height: 28px;
+	margin: 0 5px 0 0;
+	width: 140px;
+}
+#add:hover, #del:hover {
+	background: #f5f5f5;
+}
+
+/* Edit_product */
+.baseimg img {
+	border: 1px solid #999;
+	cursor: pointer;
+}
+.small {
+	color: #333;
+	font: 10px Roboto, sans-serif;
+}
+.slideimg img {
+	border: 1px solid #999;
+	cursor: pointer;
+	margin: 10px 2px;
+}
+#butUpload {
+	background: #ddd;
+	border: 1px solid #999;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 3px;
+	text-align: center;
+	width: 125px;
+}
 
 /* Breadcrumbs */
 .kroshka {
@@ -480,12 +518,15 @@ span.nav_active {
   border: 1px solid #ccc;
   background: #C5003D;
   color: #fff;
+  font: 14px Roboto, sans-serif;
   padding: 5px 7px;
   margin: 0 1px;
 }
 a.nav_link {
+	background: #fff;
   border: 1px solid #ccc;
   color: #555;
+  font: 14px Roboto, sans-serif;
   margin: 0 5px;
   padding: 5px 7px;
   text-decoration: none;

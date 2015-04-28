@@ -637,8 +637,8 @@ class model {
 	}
 
 	// Архив новостей
-	public function get_all_news() {
-		$query = "SELECT news_id, title, anons, date FROM news ORDER BY news_id DESC";
+	public function get_all_news($start_pos, $perpage) {
+		$query = "SELECT news_id, title, anons, date FROM news ORDER BY news_id DESC LIMIT $start_pos, $perpage";
 		$stmt = $this->mysqli->prepare($query);
 		$stmt->execute();
 		$stmt->bind_result($news_id, $title, $anons, $date);
@@ -652,6 +652,20 @@ class model {
 		}
 		$stmt->close();
 		return $all_news;
+	}
+
+	// Кол-во новостей
+	public function count_news() {
+		$query = "SELECT COUNT(news_id) FROM news";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($count_news);
+		$count = "";
+		while($stmt->fetch()) {
+			$count = $count_news;
+		}
+		$stmt->close();
+		return $count;
 	}
 }
 ?>
