@@ -42,7 +42,7 @@ $session_product = $this->session_add_product()?>
 					<td><input type="text" name="keywords" value="<?=$session_product['keywords']?>"></td>
 				</tr>
 				<tr>
-					<td>Мета описание (description):</td>
+					<td>Описание (description):</td>
 					<td><input type="text" name="description" value="<?=$session_product['description']?>"></td>
 				</tr>
 				<tr>

@@ -44,7 +44,7 @@ $imgslide = $this->imgslide()?>
 					<td><input type="text" name="keywords" value="<?=htmlspecialchars($content[0]['keywords'])?>"></td>
 				</tr>
 				<tr>
-					<td>Мета описание (description):</td>
+					<td>Описание (description):</td>
 					<td><input type="text" name="description" value="<?=htmlspecialchars($content[0]['description'])?>"></td>
 				</tr>
 				<tr>
@@ -105,7 +105,7 @@ $imgslide = $this->imgslide()?>
 </div> <!-- #content -->
 <script type="text/javascript">
 	var button = $('#butUpload'), interval; // Кнопка загрузки + интервал
-	var path = '<?=PRODUCT_THUMBS?>'; // Пут к папке превью
+	var path = '<?=PRODUCT_THUMBS?>'; // Путь к папке превью
 	var id = $('#goods_id').text(); // ID товара
 	new AjaxUpload(button, {
 

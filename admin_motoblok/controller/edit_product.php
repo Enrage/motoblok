@@ -7,12 +7,14 @@ class edit_product extends Core_Admin {
 		return $get_product;
 	}
 
+	// Вывод категорий
 	protected function cat() {
 		$cat = new brands();
 		$res = $cat->get_content();
 		return $res;
 	}
 
+	// Редактирование базовой картинки
 	protected function baseimg() {
 		$get_product = $this->get_content();
 		if($get_product[0]['img'] != 'no_image.jpg') {
@@ -23,6 +25,7 @@ class edit_product extends Core_Admin {
 		return $baseimg;
 	}
 
+	// Редактирование картинок галереи
 	protected function imgslide() {
 		$get_product = $this->get_content();
 		$imgslide = '';
