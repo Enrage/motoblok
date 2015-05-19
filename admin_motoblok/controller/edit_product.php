@@ -2,6 +2,12 @@
 defined('SHOP') or die('Access Denied');
 class edit_product extends Core_Admin {
 	public function get_content() {
+		if(isset($_GET['upload'])) {
+			$this->m->upload_file();
+		}
+	}
+
+	protected function get_product_data() {
 		if(isset($_GET['goods_id'])) $goods_id = (int)$_GET['goods_id'];
 		$get_product = $this->m->get_product($goods_id);
 		return $get_product;
@@ -16,7 +22,7 @@ class edit_product extends Core_Admin {
 
 	// Редактирование базовой картинки
 	protected function baseimg() {
-		$get_product = $this->get_content();
+		$get_product = $this->get_product_data();
 		if($get_product[0]['img'] != 'no_image.jpg') {
 			$baseimg = '<img src="'.PRODUCT.$get_product[0]['img'].'" class="del_img" width="150" alt="'.$get_product[0]['name'].'">';
 		} else {
@@ -27,7 +33,7 @@ class edit_product extends Core_Admin {
 
 	// Редактирование картинок галереи
 	protected function imgslide() {
-		$get_product = $this->get_content();
+		$get_product = $this->get_product_data();
 		$imgslide = '';
 		if(isset($get_product[0]['img_slide'])) {
 			$images = explode('|', $get_product[0]['img_slide']);
