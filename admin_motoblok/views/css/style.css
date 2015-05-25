@@ -231,7 +231,7 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 }
 
 /* Кнопка добавить */
-.add a {
+a.add {
 	border: 1px solid #bbb;
 	color: #656268;
 	background: #efeeef;
@@ -257,7 +257,7 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
-.add a:hover {
+a.add:hover {
 	color: #000;
 	background: #e0dde0;
 	background: -moz-linear-gradient(top,  #e0dde0 0%, #efeeef 100%);
@@ -403,6 +403,7 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 	background: #fff;
 	height: 34px;
 	margin: 15px;
+	padding: 15px;
 	text-align: center;
 	font: 15px Roboto, sans-serif;
 	width: 25%;
@@ -485,15 +486,26 @@ input[name=price] {
 	border: 1px solid #999;
 	cursor: pointer;
 	margin: 10px 2px;
+	padding: 2px;
+	width: 60px;
 }
 #butUpload {
-	background: #ddd;
+	background: #dfd;
 	border: 1px solid #999;
-	border-radius: 5px;
+	border-radius: 4px;
+	color: #333;
 	cursor: pointer;
+	font: 14px Roboto, sans-serif;
 	padding: 3px;
 	text-align: center;
 	width: 125px;
+}
+#filesUpload img {
+	border: 1px solid #999;
+	padding: 2px;
+	cursor: pointer;
+	margin-right: 5px;
+	width: 60px;
 }
 
 /* Breadcrumbs */

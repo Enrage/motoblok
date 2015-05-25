@@ -1,6 +1,10 @@
 <?php
 defined('SHOP') or die('Access Denied');
 class func {
+	public $mysqli;
+	public function __construct() {
+		$this->mysqli = db::getObject();
+	}
 	// Распечатка массива
 	public function print_arr($x) {
 		echo '<pre>';
@@ -94,5 +98,61 @@ class func {
         imagejpeg($newImg, $dest);
     }
 	  imagedestroy($newImg);
+	}
+
+	public function upload_file($id) {
+		$uploaddir = '../userfiles/product_img/photos/';
+		$file = $_FILES['userfile']['name'];
+		$ext = strtolower(preg_replace('#.+\.([a-z]+)$#i', '$1', $file));
+		$types = array("image/gif", "image/png", "image/jpeg", "image/pjpeg", "image/x-png", "image/tiff");
+		$res = array();
+		if($_FILES['userfile']['size'] > SIZE or $_FILES['userfile']['size'] == 0) {
+			$res = array('answer' => 'Ошибка! Максимальный вес файла - 3 Мб!');
+			exit(json_encode($res));
+		}
+
+		if(!isset($file)) {
+      $res = array("answer" => "Ошибка! Возможно, файл слишком большой.");
+      exit(json_encode($res));
+    }
+
+    if(!in_array($_FILES['userfile']['type'], $types)) {
+    	$res = array("answer" => "Допустимые расширения - .gif, .jpg, .png, .tiff");
+			exit(json_encode($res));
+    }
+    $query = "SELECT img_slide FROM goods WHERE goods_id = ?";
+    $stmt = $this->mysqli->prepare($query);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->bind_result($img_slide);
+    $row = array();
+    while($stmt->fetch()) {
+			$row[] = array(
+				'img_slide' => $img_slide);
+		}
+		if($img_slide) {
+			$images = explode('|', $img_slide);
+			$lastimg = end($images);
+			// Номер последней картинки
+			$lastnum = preg_replace('#\d+_(\d+)\.\w+#', '$1', $lastimg);
+			$lastnum += 1;
+			$newimg = "{$id}_{$lastnum}.{$ext}"; // Имя новой картинки
+			$images = "{$img_slide}|{$newimg}"; // Строка для записи в БД
+		} else {
+			$newimg = "{$id}_0.{$ext}"; // Имя новой картинки
+			$images = $newimg;
+		}
+
+		$uploadfile = $uploaddir.$newimg;
+		if(@move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
+			$this->resize($uploadfile, "../userfiles/product_img/thumbs/$newimg", 100, 100, $ext);
+			$query = "UPDATE goods SET img_slide = ? WHERE goods_id = ?";
+			$stmt = $this->mysqli->prepare($query);
+		  $stmt->bind_param('si', $images, $id);
+		  $stmt->execute();
+		}
+		$stmt->close();
+    $res = array('answer' => 'OK', 'file' => $newimg);
+    exit(json_encode($res));
 	}
 }

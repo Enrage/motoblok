@@ -3,13 +3,10 @@ $cat = $this->cat();
 $baseimg = $this->baseimg();
 $imgslide = $this->imgslide();
 $contents = $this->get_product_data();
-// if(isset($_POST['id'])) {
-//  	$this->m->upload_file();
-// }
 ?>
 <div id="content">
 	<div id="container">
-		<h2>Добавление товара</h2>
+		<h2>Редактирование товара</h2>
 		<?php
 		if(isset($_SESSION['edit_product']['res'])) {
 			print $_SESSION['edit_product']['res'];
@@ -84,8 +81,6 @@ $contents = $this->get_product_data();
 				<tr>
 					<td>
 						<div id="butUpload">Выбрать файл</div>
-						<?php $this->f->print_arr($_FILES); ?>
-						<!-- <input type="file" name="file"> -->
 					</td>
 					<td>
 						<div id="filesUpload"></div>
@@ -105,7 +100,7 @@ $contents = $this->get_product_data();
 					</td>
 				</tr>
 			</table>
-			<input type="submit" name="submit" value="Добавить">
+			<input type="submit" name="submit" value="Сохранить">
 		</form>
 		<?php unset($_SESSION['edit_product'])?>
 	</div> <!-- #container -->
@@ -115,9 +110,11 @@ $(document).ready(function() {
 	var button = $('#butUpload'), interval; // Кнопка загрузки + интервал
 	var path = '<?=PRODUCT_THUMBS?>'; // Путь к папке превью
 	var id = $('#goods_id').text(); // ID товара
+	var name = $('input[name=name]').val();
 	new AjaxUpload(button, {
 		action: 'index.php?view=edit_product&goods_id=' + id + '&upload=1',
 		name: 'userfile',
+		data: {id: id},
 		onSubmit: function(file, ext) {
 			if(!(ext && /^(jpg|png|jpeg|gif|tiff)$/i.test(ext))) {
 				alert('Запрещенный тип файла');
@@ -140,7 +137,7 @@ $(document).ready(function() {
 			this.enable();
 			var res = JSON.parse(response);
 			if(res.answer == 'OK') {
-				console.log(res.answer);
+				$('#filesUpload').append("<img src='" + path + res.file + "' alt='" + name + "'>");
 			} else {
 				alert(res.answer);
 			}

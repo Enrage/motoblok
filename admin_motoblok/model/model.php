@@ -240,23 +240,17 @@ class model {
 		$query = "SELECT brand_id, brand_name FROM brands WHERE brand_id = (SELECT parent_id FROM brands WHERE brand_id = ?)
 		UNION
 		SELECT brand_id, brand_name FROM brands WHERE brand_id = ?";
-		try {
-			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error Prepare products");
-			$stmt->bind_param('ii', $category, $category);
-			$stmt->execute();
-			$stmt->bind_result($brand_id, $brand_name);
-			$brandname = array();
-			while($stmt->fetch()) {
-				$brandname[] = array(
-					'brand_id' => $brand_id,
-					'brand_name' => $brand_name);
-			}
-			$stmt->close();
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('ii', $category, $category);
+		$stmt->execute();
+		$stmt->bind_result($brand_id, $brand_name);
+		$brandname = array();
+		while($stmt->fetch()) {
+			$brandname[] = array(
+				'brand_id' => $brand_id,
+				'brand_name' => $brand_name);
 		}
-		catch(Exception $e) {
-			print 'Ошибка: '. $e->getMessage();
-			die();
-		}
+		$stmt->close();
 		return $brandname;
 	}
 
@@ -381,6 +375,7 @@ class model {
 				return false;
 			}
 		}
+		$stmt->close();
 	}
 
 	// Получение данных товара
@@ -413,27 +408,105 @@ class model {
 		return $brand;
 	}
 
-	public function upload_file() {
-		$uploaddir = '../userfiles/product_img/photos/';
-		$file = $_FILES['userfile']['name'];
-		$ext = strtolower(preg_replace('#.+\.([a-z]+)$#i', '$1', $file));
-		$types = array("image/gif", "image/png", "image/jpeg", "image/pjpeg", "image/x-png", "image/tiff");
-		$res = array();
-		if($_FILES['userfile']['size'] > SIZE or $_FILES['userfile']['size'] == 0) {
-			$res = array('answer' => 'Ошибка! Максимальный вес файла - 3 Мб!');
-			exit(json_encode($res));
+	// Удаление картинок
+	public function del_img() {
+		$goods_id = (int)$_GET['goods_id'];
+		$img = $_GET['img'];
+		$rel = (int)$_GET['rel'];
+		$no_image = 'no_image.jpg';
+		if(!$rel) {
+			// Если удаляется базовая картинка
+			$query = "UPDATE goods SET img = ? WHERE goods_id = ?";
+			$stmt = $this->mysqli->prepare($query);
+			$stmt->bind_param('si', $no_image, $goods_id);
+			$stmt->execute();
+			if($stmt->affected_rows > 0) {
+				return '<input type="file" name="baseimg">';
+			} else return false;
+		} else {
+			// Если удаляется картинка галереи
+			$query = "SELECT img_slide FROM goods WHERE goods_id = ?";
+			$stmt = $this->mysqli->prepare($query);
+			$stmt->bind_param('i', $goods_id);
+			$stmt->execute();
+			$stmt->bind_result($img_slide);
+			$image = array();
+			while($stmt->fetch()) {
+				$image[] = array(
+					'img_slide' => $img_slide);
+			}
+			$images = explode('|', $img_slide);
+			foreach($images as $item) {
+				// Пропускаем удаляемую картинку
+				if($item == $img) continue;
+				// Формируем строку с картинками
+				if(!isset($galleryfiles)) {
+					$galleryfiles = $item;
+				} else {
+					$galleryfiles .= "|{$item}";
+				}
+			}
+			$query = "UPDATE goods SET img_slide = ? WHERE goods_id = ?";
+			$stmt = $this->mysqli->prepare($query);
+			$stmt->bind_param('si', $galleryfiles, $goods_id);
+			$stmt->execute();
 		}
+		$stmt->close();
+	}
 
-		if(!isset($file)) {
-      $res = array("answer" => "Ошибка! Возможно, файл слишком большой.");
-      exit(json_encode($res));
-    }
+	// Редактирование товара
+	public function edit_product($id) {
+		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+		$goods_brandid = isset($_POST['category']) ? (int)$_POST['category'] : '';
+		$keywords = isset($_POST['keywords']) ? trim($_POST['keywords']) : '';
+		$description = isset($_POST['description']) ? trim($_POST['description']) : '';
+		$anons = isset($_POST['anons']) ? trim($_POST['anons']) : '';
+		$content = isset($_POST['content']) ? trim($_POST['content']) : '';
+		$visible = isset($_POST['visible']) ? (int)$_POST['visible'] : '1';
+		$hits = isset($_POST['hits']) ? (int)$_POST['hits'] : '0';
+		$news = isset($_POST['news']) ? (int)$_POST['news'] : '0';
+		$sale = isset($_POST['sale']) ? (int)$_POST['sale'] : '0';
+		$price = isset($_POST['price']) ? round(floatval(preg_replace('#,#', '.', $_POST['price'])), 2) : '';
 
-    if(!in_array($_FILES['userfile']['type'], $types)) {
-    	$res = array("answer" => "Допустимые расширения - .gif, .jpg, .png, .tiff");
-			exit(json_encode($res));
-    }
-    $res = array('answer' => 'OK', 'file' => $file);
-    exit(json_encode($res));
+		if(empty($name)) {
+			$_SESSION['edit_product']['res'] = "<div class='error'>У товара должно быть название!</div>";
+			return false;
+		} else {
+			$query = "UPDATE goods SET name = ?, goods_brandid = ?, keywords = ?, description = ?, anons = ?, content = ?, hits = ?, news = ?, sale = ?, price = ?, visible = ? WHERE goods_id = ?";
+			$stmt = $this->mysqli->prepare($query);
+			$stmt->bind_param('sisssssssssi', $name, $goods_brandid, $keywords, $description, $anons, $content, $hits, $news, $sale, $price, $visible, $id);
+			$stmt->execute();
+			$types = array('image/gif', "image/png", 'image/jpeg', 'image/pjpeg', 'image/x-png');
+			if(isset($_FILES['baseimg']['name'])) {
+				$baseimgExt = strtolower(preg_replace('#.+\.([a-z]+)$#i', '$1', $_FILES['baseimg']['name'])); // Расширение картинки
+				$baseimgName = "{$id}.{$baseimgExt}"; // Новое имя картинки
+				$baseimgTmpName = $_FILES['baseimg']['tmp_name']; // Временное имя файла
+				$baseimgSize = $_FILES['baseimg']['size']; // Вес файла
+				$baseimgType = $_FILES['baseimg']['type']; // Тип файла
+				$baseimgError = $_FILES['baseimg']['error']; // 0 - ok, иначе - ошибка
+				$error = '';
+
+				if(!in_array($baseimgType, $types)) $error .= 'Допустимые расширения - .gif, .png, .jpg <br>';
+				if($baseimgSize > SIZE) $error .= 'Максимальный размер файла - 3 Мб!';
+				if($baseimgError) $error .= 'Ошибка при загрузке файла! Возможно файл слишком большой';
+				if(!empty($error)) $_SESSION['answer'] = "<div class='error'>Ошибка при загрузке картинки товара! <br> {$error}</div>";
+
+				// Если нет ошибок
+				if(empty($error)) {
+					if(@move_uploaded_file($baseimgTmpName, "../userfiles/product_img/tmp/$baseimgName")) {
+						$this->func->resize("../userfiles/product_img/tmp/$baseimgName", "../userfiles/product_img/baseimg/$baseimgName", 980, 630, $baseimgExt);
+						@unlink("".PRODUCT_TMP.$baseimgName."");
+						$query = "UPDATE goods SET img = ? WHERE goods_id = ?";
+						$stmt = $this->mysqli->prepare($query);
+						$stmt->bind_param('si', $baseimgName, $id);
+						$stmt->execute();
+					} else {
+						$_SESSION['answer'] .= "<div class='error'>Не удалось переместить загруженную картинку. Проверьте права на папки в каталоге ".PRODUCT_TMP."!</div>";
+					}
+				}
+			}
+			$_SESSION['answer'] .= "<div class='success'>Товар обновлен!</div>";
+			return true;
+		}
 	}
 }

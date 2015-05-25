@@ -2,7 +2,7 @@
 <div id="content">
 	<div id="container">
 		<h3>Список категорий товаров</h3>
-		<p class="add"><a href="?view=add_brand">Добавить категорию</a></p>
+		<a class="add" href="?view=add_brand">Добавить категорию</a>
 		<?php
 		if(isset($_SESSION['answer'])) {
 			print $_SESSION['answer'];

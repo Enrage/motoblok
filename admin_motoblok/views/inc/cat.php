@@ -12,19 +12,16 @@ $bread = $this->bread_crumbs()?>
 		</div> <!-- .kroshka -->
 
 		<h3>Список товаров</h3>
-		<?php if(isset($_SESSION['answer'])) {
-			echo $_SESSION['answer'];
-			unset($_SESSION['answer']); } ?>
-		<?php if(count($bread) > 1): ?>
-		<p class="add"><a href="?view=add_product&amp;brand_id=<?=$bread[1]['brand_id']?>">Добавить товар</a></p>
-		<?php else: ?>
-		<p class="add"><a href="?view=add_product&amp;brand_id=<?=$bread[0]['brand_id']?>">Добавить товар</a></p>
-		<?php endif; ?>
 		<?php
-		if(isset($_SESSION['answer'])) {
-			print $_SESSION['answer'];
-			unset($_SESSION['answer']);
+			if(isset($_SESSION['answer'])) {
+				print $_SESSION['answer'];
+				unset($_SESSION['answer']);
 		}?>
+		<?php if(count($bread) > 1): ?>
+		<a class="add" href="?view=add_product&amp;brand_id=<?=$bread[1]['brand_id']?>">Добавить товар</a>
+		<?php else: ?>
+		<a class="add" href="?view=add_product&amp;brand_id=<?=$bread[0]['brand_id']?>">Добавить товар</a>
+		<?php endif; ?>
 		<?php if(isset($content)): ?>
 		<?php
 		$col = 4; // Кол-во ячеек в строке
