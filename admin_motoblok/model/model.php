@@ -456,7 +456,7 @@ class model {
 
 	// Редактирование товара
 	public function edit_product($id) {
-		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+		if(isset($_POST['name'])) $name = trim($_POST['name']);
 		$goods_brandid = isset($_POST['category']) ? (int)$_POST['category'] : '';
 		$keywords = isset($_POST['keywords']) ? trim($_POST['keywords']) : '';
 		$description = isset($_POST['description']) ? trim($_POST['description']) : '';
@@ -469,7 +469,6 @@ class model {
 		$price = isset($_POST['price']) ? round(floatval(preg_replace('#,#', '.', $_POST['price'])), 2) : '';
 
 		if(empty($name)) {
-			$_SESSION['edit_product']['res'] = "<div class='error'>У товара должно быть название!</div>";
 			return false;
 		} else {
 			$query = "UPDATE goods SET name = ?, goods_brandid = ?, keywords = ?, description = ?, anons = ?, content = ?, hits = ?, news = ?, sale = ?, price = ?, visible = ? WHERE goods_id = ?";

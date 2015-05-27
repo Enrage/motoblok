@@ -1,7 +1,8 @@
 <?php
 defined('SHOP') or die('Access Denied');
 // Домен
-define('PATH', 'http://localhost/motoblok/');
+define('PATH', 'http://signorgiardino.ru/');
+// define('PATH', 'http://localhost/motoblok/');
 // Функции
 define('FUNC', 'model/functions.php');
 // Модель
@@ -23,11 +24,14 @@ define('SIZE', '3145728');
 // Сервер БД
 define('HOST', 'localhost');
 // Пользователь
-define('USER', 'motoblok_user');
+define('USER', 'cl120050_user');
+// define('USER', 'motoblok_user');
 // Пароль
-define('PASS', 'ovlwD31');
+define('PASS', '12qWjiD0');
+// define('PASS', 'ovlwD31');
 // БД
-define('DB', 'motoblok');
+define('DB', 'cl120050_motoblok');
+// define('DB', 'motoblok');
 // Название магазина - title
 define('TITLE', 'Интернет-магазин Всемотоблоки');
 // Email администратора

@@ -2,6 +2,14 @@
 define('SHOP', true);
 session_start();
 header("Content-Type:text/html;charset=UTF-8");
+// Подключение авторизации
+if(!$_SESSION['auth']['admin']) {
+	header("Location: auth/enter.php");
+}
+if(isset($_GET['view']) && $_GET['view'] == 'logout') {
+	unset($_SESSION['auth']);
+	header("Location: auth/enter.php");
+}
 function __autoload($c) {
 	if(file_exists("controller/".$c.".php")) {
 		require_once 'controller/'.$c.'.php';

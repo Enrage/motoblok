@@ -386,7 +386,7 @@ a.add:hover {
 	color: #333;
 	display: block;
 	font: 13px Roboto, sans-serif;
-	height: 50px;
+	height: 64px;
 	margin: 15px 10px 5px;
 	text-decoration: none;
 }
@@ -394,19 +394,22 @@ a.add:hover {
 	text-decoration: underline;
 }
 .edit_product h4 + p {
-	height: 150px;
+	height: 220px;
 }
 .edit_product h4 + p a img {
 	border: 1px solid #ccc;
+	max-width: 150px;
+	max-height: 215px;
 }
 .edit_product td {
 	background: #fff;
-	height: 34px;
-	margin: 15px;
-	padding: 15px;
+	/*height: 34px;*/
+	/*margin: 15px;*/
+	position: relative;
+	padding: 10px;
 	text-align: center;
-	font: 15px Roboto, sans-serif;
-	width: 25%;
+	font: 14px Roboto, sans-serif;
+	width: 220px;
 }
 .edit_product a.edit {
 	color: green;
@@ -561,4 +564,61 @@ footer p {
 	font: 14px Roboto, sans-serif;
 	padding: 7px 0 0;
 	text-align: center;
+}
+
+/* Login */
+.body {
+	background: url(../img/bg_image.jpg) repeat;
+	background: #ddd;
+}
+#login {
+	margin-top: 15px;
+	text-align: center;
+}
+#login input[type=text], #login input[type=password] {
+	background: #fff;
+	border: 1px solid #666;
+	border-radius: 3px;
+	color: #333;
+	font: 14px Roboto, Tahoma, Arial, Verdana;
+	height: 22px;
+	padding: 0 5px;
+	width: 180px;
+}
+#login input[type=submit] {
+	background: #ddf;
+	border: 1px solid #666;
+	border-radius: 4px;
+	color: #222;
+	font: 13px Roboto, sans-serif;
+	height: 25px;
+	margin: 10px 0 0;
+	width: 110px;
+	-webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+}
+#login input[type=submit]:hover {
+	background: #eef;
+	color: #c50;
+}
+.form_login {
+	left: 50%;
+	margin-left: -124px;
+	position: absolute;
+	top: 50%;
+	margin-top: -100px;
+}
+.form_login h2 {
+	color: #333;
+	font: 18px Roboto, Tahoma, Arial, Verdana;
+	margin: 0 0 15px;
+	text-align: center;
+}
+#login p {
+	margin: 5px;
+}
+input#subm {
+	width: 80px;
 }

@@ -18,7 +18,7 @@
 		<a href="<?=PATH?>admin_motoblok/" class="logo">Admin Panel</a>
 		<div class="top_menu">
 			<ul>
-				<li><a href="">Добро пожаловать, <span>Admin</span><img src="<?=PATH?>admin_motoblok/<?=ADMIN_TPL?>img/icon_user.png" width="12" alt="User"></a></li>
+				<li><a href="">Добро пожаловать, <span><?=$_SESSION['auth']['name']?></span><img src="<?=PATH?>admin_motoblok/<?=ADMIN_TPL?>img/icon_user.png" width="12" alt="User"></a></li>
 				<li><a href="<?=PATH?>" target="_blank">Перейти на сайт</a></li>
 				<li><a href="?view=settings"><img src="<?=PATH?>admin_motoblok/<?=ADMIN_TPL?>img/icon_settings.png" width="11" alt="Settings">Настройки</a></li>
 				<li><a href="?view=logout"><img src="<?=PATH?>admin_motoblok/<?=ADMIN_TPL?>img/icon_logout.png" width="11" alt="Logout">Выйти</a></li>

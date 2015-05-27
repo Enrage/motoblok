@@ -7,7 +7,7 @@ $bread = $this->bread_crumbs()?>
 		<?php if(count($bread) > 1): // Если подкатегория ?>
 			<a href="<?=PATH?>admin_motoblok/">Главная</a> >> <a href="?view=cat&amp;category=<?=$bread[0]['brand_id']?>"><?=$bread[0]['brand_name']?></a> >> <span><?=$bread[1]['brand_name']?></span>
 		<?php elseif(count($bread) == 1): // Если не дочерняя категория ?>
-			<a href="<?=PATH?>">Главная</a> >> <span><?=$bread[0]['brand_name']?></span>
+			<a href="<?=PATH?>admin_motoblok/">Главная</a> >> <span><?=$bread[0]['brand_name']?></span>
 		<?php endif; ?>
 		</div> <!-- .kroshka -->
 
@@ -35,7 +35,7 @@ $bread = $this->bread_crumbs()?>
 				<td>
 					<?php if(isset($content[$start])): // Если есть товар ?>
 					<h4><a href="?view=edit_product&amp;goods_id=<?=$content[$start]['goods_id']?>"><?=$content[$start]['name']?></a></h4>
-					<p><a href="?view=edit_product&amp;goods_id=<?=$content[$start]['goods_id']?>"><img src="<?=PRODUCT.$content[$start]['img']?>" alt="<?=$content[$start]['name']?>" height="140"></a></p>
+					<p><a href="?view=edit_product&amp;goods_id=<?=$content[$start]['goods_id']?>"><img src="<?=PRODUCT.$content[$start]['img']?>" alt="<?=$content[$start]['name']?>"></a></p>
 					<p class="cat_price">цена: <span><?=$content[$start]['price']?></span> руб.</p>
 					<div><a href="?del_product&amp;goods_id=<?=$content[$start]['goods_id']?>" class="del"><img src="<?=ADMIN_TPL?>img/delete.jpg" alt="Удалить товар" width="15">Удалить</a></div>
 					<?php else: // Если нет товара ?>

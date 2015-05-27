@@ -104,7 +104,7 @@ class func {
 		$uploaddir = '../userfiles/product_img/photos/';
 		$file = $_FILES['userfile']['name'];
 		$ext = strtolower(preg_replace('#.+\.([a-z]+)$#i', '$1', $file));
-		$types = array("image/gif", "image/png", "image/jpeg", "image/pjpeg", "image/x-png", "image/tiff");
+		$types = array("image/gif", "image/png", "image/jpeg", "image/pjpeg", "image/x-png");
 		$res = array();
 		if($_FILES['userfile']['size'] > SIZE or $_FILES['userfile']['size'] == 0) {
 			$res = array('answer' => 'Ошибка! Максимальный вес файла - 3 Мб!');
@@ -117,7 +117,7 @@ class func {
     }
 
     if(!in_array($_FILES['userfile']['type'], $types)) {
-    	$res = array("answer" => "Допустимые расширения - .gif, .jpg, .png, .tiff");
+    	$res = array("answer" => "Допустимые расширения - .gif, .jpg, .png");
 			exit(json_encode($res));
     }
     $query = "SELECT img_slide FROM goods WHERE goods_id = ?";

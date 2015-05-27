@@ -116,7 +116,7 @@ $(document).ready(function() {
 		name: 'userfile',
 		data: {id: id},
 		onSubmit: function(file, ext) {
-			if(!(ext && /^(jpg|png|jpeg|gif|tiff)$/i.test(ext))) {
+			if(!(ext && /^(jpg|png|jpeg|gif)$/i.test(ext))) {
 				alert('Запрещенный тип файла');
 				return false;
 			}

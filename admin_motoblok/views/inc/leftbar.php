@@ -8,8 +8,8 @@ $cat = $this->m->catalog()?>
 	<nav>
 		<ul class="nav-left">
 			<li><a href="?view=orders">Заказы</a></li>
-			<li><a href="?view=brands">Каталог товаров</a></li>
-			<li><a href="#" class="catalog_admin">Товары</a>
+			<li><a href="?view=brands">Каталог категорий</a></li>
+			<li><a href="#" class="catalog_admin">Каталог товаров</a>
 				<ul class="categories">
 				<?php foreach($cat as $key => $item): // Если это родительская категория ?>
 					<?php if(count($item) > 1): ?>
