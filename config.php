@@ -1,5 +1,6 @@
 <?php
 defined('SHOP') or die('Access Denied');
+
 // Домен
 // define('PATH', 'http://signorgiardino.ru/');
 define('PATH', 'http://localhost/motoblok/');
