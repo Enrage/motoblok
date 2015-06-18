@@ -507,5 +507,94 @@ class model {
 			$_SESSION['answer'] .= "<div class='success'>Товар обновлен!</div>";
 			return true;
 		}
+		$stmt->close();
+	}
+
+	// Получение кол-ва необработанных заказов
+	public function count_new_orders() {
+		$status = '0';
+		$query = "SELECT COUNT(*) AS count FROM orders WHERE status = ?";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('s', $status);
+		$stmt->execute();
+		$stmt->bind_result($count);
+		$row = [];
+		while($stmt->fetch()) {
+			$row = ['count' => $count];
+		}
+		$stmt->close();
+		return $row['count'];
+	}
+
+	// Получение необработанных заказов
+	public function orders($status0, $start_pos, $perpage) {
+		$query = "SELECT orders.order_id, orders.date, orders.status, customers.name FROM orders LEFT JOIN customers ON customers.customer_id = orders.customer_id".$status0." LIMIT $start_pos, $perpage";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($order_id, $date, $status, $name);
+		$orders = [];
+		while($stmt->fetch()) {
+			$orders[] = [
+				'order_id' => $order_id,
+				'date' => $date,
+				'status' => $status,
+				'name' => $name];
+		}
+		$stmt->close();
+		return $orders;
+	}
+
+	// Просмотр заказа
+	public function show_order($order_id) {
+		$query = "SELECT zakaz_tovar.name, zakaz_tovar.price, zakaz_tovar.quantity, orders.order_id, orders.date, orders.status, orders.prim, customers.name AS customer, customers.email, customers.phone, customers.address, dostavka.name AS sposob
+		FROM zakaz_tovar LEFT JOIN orders ON zakaz_tovar.orders_id = orders.order_id LEFT JOIN customers ON customers.customer_id = orders.customer_id LEFT JOIN dostavka ON dostavka.dostavka_id = orders.dostavka_id WHERE zakaz_tovar.orders_id = ?";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('s', $order_id);
+		$stmt->execute();
+		$stmt->bind_result($name, $price, $quantity, $order, $date, $status, $prim, $customer, $email, $phone, $address, $sposob);
+		$orders = [];
+		while($stmt->fetch()) {
+			$orders[] = [
+				'name' => $name,
+				'price' => $price,
+				'quantity' => $quantity,
+				'order' => $order,
+				'date' => $date,
+				'status' => $status,
+				'prim' => $prim,
+				'customer' => $customer,
+				'email' => $email,
+				'phone' => $phone,
+				'address' => $address,
+				'sposob' => $sposob];
+		}
+		$stmt->close();
+		return $orders;
+	}
+
+	// Подтверждение заказа
+	public function confirm_order($order_id) {
+		$status = '1';
+		$query = "UPDATE orders SET status = ? WHERE order_id = ?";
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->bind_param('si', $status, $order_id);
+		$stmt->execute();
+		if($stmt->affected_rows > 0) {
+			return true;
+		} else return false;
+		$stmt->close();
+	}
+
+	public function count_orders($status) {
+		$query = "SELECT COUNT(order_id) FROM orders".$status;
+		$stmt = $this->mysqli->prepare($query);
+		$stmt->execute();
+		$stmt->bind_result($count);
+		$row = [];
+		while($stmt->fetch()) {
+			$row = ['count' => $count];
+		}
+		$stmt->close();
+		return $row['count'];
 	}
 }

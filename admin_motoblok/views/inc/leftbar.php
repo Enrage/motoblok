@@ -1,4 +1,5 @@
 <?php defined('SHOP') or die('Access Denied');
+$count_new_orders = $this->m->count_new_orders();
 $cat = $this->m->catalog()?>
 <aside id="leftbar">
 	<form action="" method="get" class="search">
@@ -7,6 +8,7 @@ $cat = $this->m->catalog()?>
 	</form>
 	<nav>
 		<ul class="nav-left">
+			<li><a href="?view=orders&amp;status=0">Есть новые заказы: (<?=$count_new_orders?>)</a></li>
 			<li><a href="?view=orders">Заказы</a></li>
 			<li><a href="?view=brands">Каталог категорий</a></li>
 			<li><a href="#" class="catalog_admin">Каталог товаров</a>

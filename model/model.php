@@ -450,10 +450,10 @@ class model {
 			$order_id = $stmt->insert_id; // ID сохраненного заказа
 			$val = '';
 			foreach($_SESSION['cart'] as $goods_id => $value) {
-				$val .= "($order_id, $goods_id, {$value['qty']}),";
+				$val .= "($order_id, $goods_id, {$value['qty']}, '{$value['name']}', {$value['price']}),";
 			}
 			$val = substr($val, 0, -1); // Удаляем последнюю запятую
-			$query = "INSERT INTO zakaz_tovar (orders_id, goods_id, quantity) VALUES $val";
+			$query = "INSERT INTO zakaz_tovar (orders_id, goods_id, quantity, name, price) VALUES $val";
 			if(!$stmt = $this->mysqli->prepare($query)) throw new Exception("Error prepare insert zakaz_tovar");
 			$stmt->execute();
 			if($stmt->affected_rows == -1) {

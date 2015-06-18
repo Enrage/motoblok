@@ -1,5 +1,7 @@
 <?php defined('SHOP') or die('Access Denied');
-$session_order = $this->session_order()?>
+$session_order = $this->session_order();
+if(preg_match("/view=cart/i", $_SERVER['HTTP_REFERER'])) $continue = '?view=main';
+else $continue = $_SERVER['HTTP_REFERER'];?>
 <!-- Content -->
 <div id="content_grid">
 	<div id="container_grid">
@@ -28,7 +30,7 @@ $session_order = $this->session_order()?>
 						</tr>
 						<?php endforeach; ?>
 						<tr>
-							<td colspan="5" class="continue_shopping"><a href="#">Продолжить покупки</a><p>Общая сумма заказа: <span><?=$_SESSION['total_sum']?> руб.</span></p></td>
+							<td colspan="5" class="continue_shopping"><a href="<?=$continue?>">Продолжить покупки</a><p>Общая сумма заказа: <span><?=$_SESSION['total_sum']?> руб.</span></p></td>
 						</tr>
 					</table>
 				</div> <!-- #cart -->

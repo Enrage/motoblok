@@ -42,6 +42,10 @@ body {
 	list-style: disc outside none;
 	margin: 10px 0 5px 25px;
 }
+.highlight td {
+	background: #e2e2e2 !important;
+	color: #000 !important;
+}
 .clr {
 	clear: both;
 }
@@ -228,6 +232,12 @@ nav li a:hover, .nav-left li ul li a:hover, .nav-left li ul li + ul li a:hover {
 #container h3 {
 	color: #333;
 	font: 20px Roboto, sans-serif;
+	margin: 5px 0 0;
+}
+#container h4 {
+	color: #333;
+	font: 17px Roboto, sans-serif;
+	margin-bottom: 10px;
 }
 
 /* Кнопка добавить */
@@ -300,7 +310,7 @@ a.add:hover {
 }
 .tabl .name_page {
 	text-align: left;
-	padding: 10px 0 10px 15px;
+	padding: 5px 0 5px 15px;
 }
 .name_page > a {
 	color: #333;
@@ -310,6 +320,16 @@ a.add:hover {
 }
 .name_page a:hover {
 	text-decoration: underline;
+}
+.email_page {
+	font: bold 17px Roboto, sans-serif !important;
+	padding: 10px 0;
+}
+.email_page a, .email_page span {
+	font: 17px Roboto, sans-serif !important;
+}
+.tabl .str_name {
+	min-width: 350px;
 }
 .subcat {
 	margin: 8px 0;

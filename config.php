@@ -1,8 +1,8 @@
 <?php
 defined('SHOP') or die('Access Denied');
 // Домен
-define('PATH', 'http://signorgiardino.ru/');
-// define('PATH', 'http://localhost/motoblok/');
+// define('PATH', 'http://signorgiardino.ru/');
+define('PATH', 'http://localhost/motoblok/');
 // Функции
 define('FUNC', 'model/functions.php');
 // Модель
@@ -30,8 +30,8 @@ define('USER', 'cl120050_user');
 define('PASS', '12qWjiD0');
 // define('PASS', 'ovlwD31');
 // БД
-define('DB', 'cl120050_motoblok');
-// define('DB', 'motoblok');
+// define('DB', 'cl120050_motoblok');
+define('DB', 'motoblok');
 // Название магазина - title
 define('TITLE', 'Интернет-магазин Всемотоблоки');
 // Email администратора
@@ -42,6 +42,8 @@ define('PERPAGE', 6);
 define('ADM_PERPAGE', 12);
 // Кол-во новостей на странице в архиве
 define('PERPAGE_NEWS', 2);
+// Кол-во заказов
+define('PERPAGE_ORDERS', 5);
 // Папка шаблонов административной части
 define('ADMIN_TPL', 'views/');
 // Домашняя папка

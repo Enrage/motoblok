@@ -17,13 +17,15 @@ $bread = $this->bread()?>
 				<?php if(!empty($content[0]['img_slide'])): // Если есть картинки галереи ?>
 				<div class="detail_img_small">
 					<?php foreach($content['img_slide'] as $item): ?>
-					<a rel="group" title="<?=$content[0]['name']?>" href="<?=PRODUCT_PHOTOS.$item?>"><img src="<?=PRODUCT_THUMBS.$item?>" width="60" alt="<?=$content[0]['name']?>"></a>
+					<div class="small_img">
+						<a rel="group" title="<?=$content[0]['name']?>" href="<?=PRODUCT_PHOTOS.$item?>"><img src="<?=PRODUCT_THUMBS.$item?>" width="60" alt="<?=$content[0]['name']?>"></a>
+					</div>
 					<?php endforeach; ?>
 				</div> <!-- .detail_img_small -->
 				<?php endif; ?>
 			</div> <!-- .detail_img -->
 			<h2><?=$content[0]['name']?></h2>
-			<table class="detail_info">
+			<!-- <table class="detail_info">
 				<tr>
 					<td>Двигатель:</td>
 					<td>Honda GX200 (Япония)</td>
@@ -88,10 +90,15 @@ $bread = $this->bread()?>
 					<td>Гарантия:</td>
 					<td>1 год от производителя + расширенная</td>
 				</tr>
-			</table> <!-- .detail_info -->
-			<div class="detail_price">
-				<p class="price"><span class="id_<?=$content[0]['goods_id']?>"><?=$content[0]['price']?></span> руб.<a href="?view=addtocart&amp;goods_id=<?=$content[0]['goods_id']?>" class="addtocart" id="<?=$content[0]['goods_id']?>">Купить</a></p>
+			</table> --> <!-- .detail_info -->
+			<div class="detail_info">
+				<?=$content[0]['content']?>
 			</div>
+			<div class="detail_price">
+				<p class="price"><span class="id_<?=$content[0]['goods_id']?>"><?=$content[0]['price']?></span> руб.</p>
+			</div>
+			<a href="?view=addtocart&amp;goods_id=<?=$content[0]['goods_id']?>" class="addtocart cart_product" id="<?=$content[0]['goods_id']?>">Купить</a>
+			<div class="clr"></div>
 			<div id="add_desc">
 				<ul id="tabs">
 					<li id="one_tab" class="selected_tab"><a href="#one" onclick="One(); return false;">Описание</a></li>

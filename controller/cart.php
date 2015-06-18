@@ -2,6 +2,7 @@
 defined('SHOP') or die('Access Denied');
 class cart extends Core {
 	public function get_content() {
+		$this->f->print_arr($_SESSION);
 		// Получение способов доставки
 		$res = $this->m->get_dostavka();
 		// Пересчет товаров в корзине
@@ -12,6 +13,7 @@ class cart extends Core {
 			$this->f->addtocart($goods_id, $qty);
 			$_SESSION['total_sum'] = $this->m->total_sum($_SESSION['cart']); // Сумма заказа
 			$this->f->total_quantity(); // Кол-во товаров в корзине
+			$this->f->redirect();
 		}
 		// Удаление товара из корзины
 		if(isset($_GET['delete'])) {

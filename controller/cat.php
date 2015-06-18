@@ -11,6 +11,7 @@ class cat extends Core {
 		} else $res = "<div class='error'>Нет такой категории!</div>";
 		return $res;
 	}
+
 	protected function bread_crumbs() {
 		if(isset($_GET['category'])) {
 			$category = abs((int)$_GET['category']);
@@ -18,6 +19,7 @@ class cat extends Core {
 		} else $brand_name = null;
 		return $brand_name;
 	}
+
 	protected function pos() {
 		if(isset($_GET['category'])) {
 			$category = abs((int)$_GET['category']);
@@ -40,6 +42,7 @@ class cat extends Core {
 		}
 		return $result;
 	}
+
 	public function sort() {
 		// Ключи - то, что передаем GET параметром
 		// Значения - то, что показываем пользователю и часть SQL-запроса, который передем в модель

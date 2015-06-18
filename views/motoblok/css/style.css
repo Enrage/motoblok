@@ -897,7 +897,6 @@ a.shop_now:hover {
 /* Картинки галереи */
 .detail_img {
 	float: left;
-  height: 200px;
 	width: 280px;
 }
 .detail_img_large {
@@ -908,6 +907,13 @@ a.shop_now:hover {
 .detail_img_small {
 	margin: 0 10px;
 	width: 264px;
+}
+.small_img {
+  height: 60px;
+  float: left;
+  display: block;
+  position: relative;
+  width: 60px;
 }
 .detail_img_small img {
 	float: left;
@@ -928,6 +934,9 @@ a.shop_now:hover {
 .detail_info tr td:first-child {
 	font: bold 14px Roboto, sans-serif;
 }
+#add_desc {
+  background: #fff;
+}
 
 /* Цена и купить */
 .detail_price {
@@ -942,19 +951,18 @@ a.shop_now:hover {
 	color: #72a700;
 	font: bold 19px Roboto, sans-serif;
 }
-.detail_price p a {
+a.cart_product {
 	background: #C5003D;
 	border-radius: 12px;
 	color: #fff;
 	font: 16px Roboto, sans-serif;
-	display: block;
 	margin: 16px 0;
 	text-align: center;
 	text-decoration: none;
-	padding: 2px 0;
-	width: 120px;
+	padding: 4px 20px;
+	width: 180px;
 }
-.detail_price p a:hover {
+a.cart_product:hover {
 	background: #eb0048;
 }
 
